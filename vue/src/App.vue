@@ -17,7 +17,7 @@ export default {
   components: {
     Header,
     Footer,
-    SearchBar
+    SearchBar,
   }
 }
 </script>
@@ -43,4 +43,13 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.bg-modal {
+     width: 100%;
+     height: 100%;
+     background-color: black;
+     opacity: 0.7;
+     position: absolute;
+     top: 0;
+   }
 </style>

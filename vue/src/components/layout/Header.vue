@@ -40,9 +40,9 @@
                   <img src="../../assets/login.png" width="30" height="30" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown_menu">
-                  <a class="dropdown-item">Log in</a>
+                  <a class="dropdown-item" data-toggle="modal" data-target=#loginModal>Log in</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item">Sign up</a>
+                  <a class="dropdown-item" data-toggle="modal" data-target=#registrationModal>Sign up</a>
                 </div>
               </li>
             </div>
@@ -50,14 +50,77 @@
         </div>
       </div>
     </nav>
+    <div class="modal fade" role="dialog" id="loginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Log in</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                  <div class="form-group">
+                      <input type="text" name="username" class="form-control" placeholder="Username">
+                  </div>
+                  <div class="form-group">
+                      <input type="password" name="password" class="form-control" placeholder="Password">
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <p class=mr-auto>Don't have an account? <a data-toggle="modal" data-target=#registrationModal data-dismiss="modal" class="item" >Sign up here</a></p>
+                  <button type="submit" class="btn btn-success">Sign in</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" id="registrationModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Registration</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                  <div class="form-group">
+                      <input type="text" name="username" class="form-control" placeholder="Username">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" name="email" class="form-control" placeholder="Email">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" name="password" class="form-control" placeholder="Password">
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <p class=mr-auto>Already registered? <a data-toggle="modal" data-target=#loginModal data-dismiss="modal" class="item" >Log in Here</a></p>
+                  <button type="submit" class="btn btn-success">Sign up</button>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  components: {
+  }
 };
 </script>
 
 <style scoped>
+
+.item {
+  font-weight: bold;
+}
+
+.item:hover {
+    cursor: pointer;
+    background-color: darkgoldenrod;
+}
+   
 </style>
