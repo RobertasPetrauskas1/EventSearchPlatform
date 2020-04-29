@@ -51,7 +51,7 @@
       </div>
     </nav>
     <div class="modal fade" role="dialog" id="loginModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Log in</h3>
@@ -75,7 +75,7 @@
         </div>
     </div>
     <div class="modal fade" role="dialog" id="registrationModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Registration</h3>
