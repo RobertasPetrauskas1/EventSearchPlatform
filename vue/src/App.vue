@@ -3,12 +3,13 @@
     <Header />
     <br><br><br>
     <SearchBar />
-    <router-view/>
+    <Body />
     <Footer />
   </div>
 </template>
 
 <script>
+import Body from './components/Body'
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import SearchBar from './components/SearchBar';
@@ -18,6 +19,7 @@ export default {
     Header,
     Footer,
     SearchBar,
+    Body,
   }
 }
 </script>
