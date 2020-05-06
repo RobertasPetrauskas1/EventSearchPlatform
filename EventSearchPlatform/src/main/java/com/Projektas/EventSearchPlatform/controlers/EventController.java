@@ -1,7 +1,7 @@
 package com.Projektas.EventSearchPlatform.controlers;
 
 import com.Projektas.EventSearchPlatform.models.Event;
-import com.Projektas.EventSearchPlatform.repositories.EventRepo;
+import com.Projektas.EventSearchPlatform.repositories.*;
 import com.Projektas.EventSearchPlatform.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,13 +12,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.NoSuchElementException;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @RestController
 @RequestMapping("/event")
 public class EventController {
     @Autowired
     private EventRepo eventRepo;
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private EventTypeRepo eventTypeRepo;
+    @Autowired
+    private CityRepo cityRepo;
+    @Autowired
+    private PlaceRepo placeRepo;
 
     @GetMapping
     public Iterable<Event> getAllEvents(){ return eventRepo.findAll(); }
@@ -46,37 +55,62 @@ public class EventController {
                                          @RequestParam(required = false) String facebook,
                                          @RequestParam String description,
                                          @RequestParam(required = false) String tickets){
+        boolean isUser = userRepo.findById(fk_user_id).isPresent();
+        boolean isEventType = eventTypeRepo.findById(fk_event_type).isPresent();
+        boolean isCity = cityRepo.findById(fk_city).isPresent();
+        boolean isPlace = placeRepo.findById(fk_place).isPresent();
+        if(isUser && isEventType && isCity && isPlace) {
+            Event e = new Event();
+            e.setFk_user_id(fk_user_id);
+            e.setName(name);
+            e.setFk_event_type(fk_event_type);
+            e.setDate(date);
+            e.setTime(time);
+            e.setDuration(duration);
+            e.setFk_city(fk_city);
+            e.setFk_place(fk_place);
+            e.setPhone_number(phone_number);
+            e.setWebsite(website);
+            e.setFacebook(facebook);
+            e.setDescription(description);
+            e.setTickets(tickets);
+            eventRepo.save(e);
+            return new ResponseEntity<>(e, HttpStatus.OK);
+        }else{
+            return Messages.printEventValidationErrors(isUser, isEventType, isCity, isPlace);
+        }
 
-        Event e = new Event();
-        e.setFk_user_id(fk_user_id);
-        e.setName(name);
-        e.setFk_event_type(fk_event_type);
-        e.setDate(date);
-        e.setTime(time);
-        e.setDuration(duration);
-        e.setFk_city(fk_city);
-        e.setFk_place(fk_place);
-        e.setPhone_number(phone_number);
-        e.setWebsite(website);
-        e.setFacebook(facebook);
-        e.setDescription(description);
-        e.setTickets(tickets);
-        eventRepo.save(e);
-
-        return new ResponseEntity<>(e, HttpStatus.OK);
     }
     @PostMapping
     public ResponseEntity<Object> addEvent(@RequestBody @Valid Event event){
-        eventRepo.save(event);
-        return new ResponseEntity<>("Saved", HttpStatus.OK);
+        boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
+        boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();
+        boolean isCity = cityRepo.findById(event.getFk_city()).isPresent();
+        boolean isPlace = placeRepo.findById(event.getFk_place()).isPresent();
+        if(isUser && isEventType && isCity && isPlace) {
+            eventRepo.save(event);
+            return new ResponseEntity<>("Saved", HttpStatus.OK);
+        }else{
+            return Messages.printEventValidationErrors(isUser, isEventType, isCity, isPlace);
+        }
     }
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@RequestBody @Valid Event event, @PathVariable Integer id){
         Event u = event;
+        boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
+        boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();
+        boolean isCity = cityRepo.findById(event.getFk_city()).isPresent();
+        boolean isPlace = placeRepo.findById(event.getFk_place()).isPresent();
+
         if(eventRepo.findById(id).isPresent()) {
-            u.setId(id);
-            eventRepo.save(u);
-            return new ResponseEntity<>("Saved", HttpStatus.OK);
+            if(isUser && isEventType && isCity && isPlace){
+                u.setId(id);
+                eventRepo.save(u);
+                return new ResponseEntity<>("Saved", HttpStatus.OK);
+            }
+            else{
+                return Messages.printEventValidationErrors(isUser, isEventType, isCity, isPlace);
+            }
         }
         else {
             return Messages.errorMsg("Event with id:" + id + " not found");
