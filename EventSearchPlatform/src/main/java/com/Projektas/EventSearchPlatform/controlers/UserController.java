@@ -51,7 +51,20 @@ public class UserController {
             return new ResponseEntity<>("Saved", HttpStatus.OK);
 
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateUser(@RequestBody @Valid User user, @PathVariable Integer id){
+        User u = user;
 
+            if(userRepo.findById(id).isPresent()) {
+                u.setId(id);
+                userRepo.save(u);
+                return new ResponseEntity<>("Saved", HttpStatus.OK);
+            }
+            else {
+                return errorMsg("User with id:" + id + " not found");
+            }
+
+    }
     @GetMapping()
     public Iterable<User> getAllUsers(){
         return userRepo.findAll();
@@ -64,22 +77,25 @@ public class UserController {
             return new ResponseEntity<>(u, HttpStatus.OK);
         }
         catch (NoSuchElementException e){
-            Map<String, Object> body = new LinkedHashMap<>();
-            body.put("timestamp", LocalDateTime.now());
-            body.put("status", HttpStatus.BAD_REQUEST);
-            body.put("error", "User with id:" + id + " not found");
-            return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+            return errorMsg("User with id:" + id + " not found");
         }
     }
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Integer id){
+    public ResponseEntity<Object> deleteUser(@PathVariable Integer id){
         try {
             userRepo.deleteById(id);
-            return "Deleted";
+            return new ResponseEntity<>("User with id: " + id + " deleted", HttpStatus.OK);
         }
         catch(EmptyResultDataAccessException e){
-            return "No user with id: " + id + " found";
+            return new ResponseEntity<>("No user with id: " + id + " found", HttpStatus.BAD_REQUEST);
         }
+    }
+    private ResponseEntity<Object> errorMsg(String msg){
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST);
+        body.put("error", msg);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
 }
