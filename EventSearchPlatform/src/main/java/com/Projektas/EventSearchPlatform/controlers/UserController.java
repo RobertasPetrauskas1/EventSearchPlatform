@@ -2,6 +2,7 @@ package com.Projektas.EventSearchPlatform.controlers;
 
 import com.Projektas.EventSearchPlatform.models.User;
 import com.Projektas.EventSearchPlatform.repositories.UserRepo;
+import com.Projektas.EventSearchPlatform.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,7 @@ public class UserController {
                 return new ResponseEntity<>("Saved", HttpStatus.OK);
             }
             else {
-                return errorMsg("User with id:" + id + " not found");
+                return Messages.errorMsg("User with id:" + id + " not found");
             }
 
     }
@@ -77,7 +78,7 @@ public class UserController {
             return new ResponseEntity<>(u, HttpStatus.OK);
         }
         catch (NoSuchElementException e){
-            return errorMsg("User with id:" + id + " not found");
+            return Messages.errorMsg("User with id:" + id + " not found");
         }
     }
     @DeleteMapping("/{id}")
@@ -87,15 +88,8 @@ public class UserController {
             return new ResponseEntity<>("User with id: " + id + " deleted", HttpStatus.OK);
         }
         catch(EmptyResultDataAccessException e){
-            return new ResponseEntity<>("No user with id: " + id + " found", HttpStatus.BAD_REQUEST);
+            return Messages.errorMsg("No user with id: " + id + " found");
         }
-    }
-    private ResponseEntity<Object> errorMsg(String msg){
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.BAD_REQUEST);
-        body.put("error", msg);
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
 }
