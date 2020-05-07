@@ -43,6 +43,7 @@ public class EventController {
         }
     }
 
+
     @PostMapping(params = {"fk_user_id", "name", "fk_event_type", "date", "time", "duration", "fk_city",
                             "fk_place", "phone_number", "website", "facebook", "description", "tickets"})
     public ResponseEntity<Object> addEvent(@RequestParam Integer fk_user_id, @RequestParam String name,
@@ -95,7 +96,7 @@ public class EventController {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUser(@RequestBody @Valid Event event, @PathVariable Integer id){
+    public ResponseEntity<Object> updateEvent(@RequestBody @Valid Event event, @PathVariable Integer id){
         Event u = event;
         boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
         boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();

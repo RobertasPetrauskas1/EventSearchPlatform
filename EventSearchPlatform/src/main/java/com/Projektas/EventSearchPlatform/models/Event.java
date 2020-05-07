@@ -3,11 +3,14 @@ package com.Projektas.EventSearchPlatform.models;
 import com.Projektas.EventSearchPlatform.customValidators.PhoneNumberConstraint;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Data
 @Entity
@@ -47,5 +50,6 @@ public class Event {
     private String description;
     @Size(max = 255, message = "Event ticket link size can't be over 255 characters long!")
     private String tickets;
-
+   // @NotNull(message = "Event photo is required!")
+    private Integer fk_photo;
 }

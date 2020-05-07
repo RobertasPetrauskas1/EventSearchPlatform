@@ -13,5 +13,5 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @NotNull
-    private String path;
+    private String name;
 }
