@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -40,6 +41,32 @@ public class EventController {
         }
         catch (NoSuchElementException ex){
             return Messages.errorMsg("Event with id:" + id + " not found");
+        }
+    }
+    @GetMapping(params = {"limit", "offset"})
+    public List<Object> getEvents(@RequestParam("limit") Integer limit,
+                                               @RequestParam("offset") Integer offset){
+        try{
+            if(limit > 0 && offset >= 0) {
+                List<Object> res = new ArrayList<>();
+                List<Event> events = eventRepo.limitAndOffsetEvents(limit, offset);
+                for (Event event : events) {
+                    res.add(event.toPreview());
+                }
+                return res;
+            }else{
+                Map<String, Object> err = new LinkedHashMap<>();
+                err.put("timestamp", LocalDateTime.now());
+                err.put("status", HttpStatus.BAD_REQUEST);
+                err.put("error", "Limit cant be less than 1. Offset cant be less than 0.");
+                List<Object> list = new ArrayList<>();
+                list.add(err);
+                return list;
+            }
+        } catch (MethodArgumentTypeMismatchException e){
+            List<Object> temp = new ArrayList<>();
+            temp.add(Messages.errorMsgMap("Wrong imput for limit and offset"));
+            return temp;
         }
     }
 

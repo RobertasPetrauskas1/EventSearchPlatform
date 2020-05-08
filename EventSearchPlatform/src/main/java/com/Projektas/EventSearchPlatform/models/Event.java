@@ -3,12 +3,14 @@ package com.Projektas.EventSearchPlatform.models;
 import com.Projektas.EventSearchPlatform.customValidators.PhoneNumberConstraint;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -52,4 +54,16 @@ public class Event {
     private String tickets;
    // @NotNull(message = "Event photo is required!")
     private Integer fk_photo;
+
+    public Map<String, Object> toPreview(){
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("id", this.id);
+        body.put("name", this.name);
+        body.put("type", this.fk_event_type);
+        body.put("location", this.fk_place);
+        body.put("date", this.date);
+        body.put("time", this.time);
+        body.put("photo", this.fk_photo);
+        return body;
+    }
 }

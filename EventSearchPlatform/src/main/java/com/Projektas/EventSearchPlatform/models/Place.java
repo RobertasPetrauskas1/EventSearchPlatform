@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Data
 @Entity
@@ -39,4 +41,16 @@ public class Place {
     private String description;
     @Size(max = 40, message = "Place working hour size can't be over 40 characters long!")
     private String working_hours;
+    private Integer fk_photo;
+
+    public Map<String, Object> toPreview(){
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("id", this.id);
+        body.put("name", this.name);
+        body.put("type", this.fk_place_type);
+        body.put("city", this.fk_city);
+        body.put("location", this.address);
+        body.put("photo", this.fk_photo);
+        return body;
+    }
 }

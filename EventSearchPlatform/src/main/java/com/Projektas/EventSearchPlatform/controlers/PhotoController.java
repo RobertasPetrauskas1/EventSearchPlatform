@@ -2,7 +2,6 @@ package com.Projektas.EventSearchPlatform.controlers;
 
 import com.Projektas.EventSearchPlatform.models.Photo;
 import com.Projektas.EventSearchPlatform.repositories.PhotosRepo;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -10,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.NoSuchElementException;
 
 @RestController
