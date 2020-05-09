@@ -18,6 +18,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/event")
+@CrossOrigin
 public class EventController {
     @Autowired
     private EventRepo eventRepo;

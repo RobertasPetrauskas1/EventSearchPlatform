@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping(path = "/user")
 @Validated
+@CrossOrigin
 public class UserController {
 
     @Autowired

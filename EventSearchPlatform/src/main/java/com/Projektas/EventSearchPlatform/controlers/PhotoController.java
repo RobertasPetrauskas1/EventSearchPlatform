@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/media")
+@CrossOrigin
 public class PhotoController {
 
     @Autowired
