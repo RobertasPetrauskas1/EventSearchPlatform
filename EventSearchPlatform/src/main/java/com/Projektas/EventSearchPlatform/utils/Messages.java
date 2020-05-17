@@ -42,4 +42,21 @@ public class Messages {
         body.put("errors", errors);
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
+    static public ResponseEntity<Object> printPlaceValidationErrors(boolean user, boolean placeType, boolean city){
+        Map<String, Object> body = new LinkedHashMap<>();
+        List<String> errors = new ArrayList<>();
+        if(!user){
+            errors.add("User with given id not found.");
+        }
+        if(!placeType){
+            errors.add("Invalid event type.");
+        }
+        if(!city){
+            errors.add("Invalid city name.");
+        }
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST);
+        body.put("errors", errors);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
 }

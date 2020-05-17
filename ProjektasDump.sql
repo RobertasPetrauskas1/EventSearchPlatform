@@ -126,7 +126,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (18);
+INSERT INTO `hibernate_sequence` VALUES (24);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +150,7 @@ CREATE TABLE `photos` (
 
 LOCK TABLES `photos` WRITE;
 /*!40000 ALTER TABLE `photos` DISABLE KEYS */;
-INSERT INTO `photos` VALUES (1,'event_photos/1.jpg'),(2,'place_photos/2.jpg');
+INSERT INTO `photos` VALUES (1,'event_photos/1.jpg'),(2,'place_photos/2.jpg'),(3,'place_photos/3.jpg');
 /*!40000 ALTER TABLE `photos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,6 +163,7 @@ DROP TABLE IF EXISTS `place`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `place` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int NOT NULL,
   `name` varchar(255) COLLATE utf8_lithuanian_ci NOT NULL,
   `fk_city` varchar(40) COLLATE utf8_lithuanian_ci NOT NULL,
   `address` varchar(100) COLLATE utf8_lithuanian_ci NOT NULL,
@@ -177,10 +178,12 @@ CREATE TABLE `place` (
   KEY `place_city_name` (`fk_city`),
   KEY `place_type` (`fk_place_type`),
   KEY `fk_photo_id_idx` (`fk_photo`),
+  KEY `user_id_idx` (`fk_user_id`),
   CONSTRAINT `fk_photo_id` FOREIGN KEY (`fk_photo`) REFERENCES `photos` (`id`),
   CONSTRAINT `place_city_name` FOREIGN KEY (`fk_city`) REFERENCES `city` (`name`),
-  CONSTRAINT `place_type` FOREIGN KEY (`fk_place_type`) REFERENCES `place_type` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
+  CONSTRAINT `place_type` FOREIGN KEY (`fk_place_type`) REFERENCES `place_type` (`name`),
+  CONSTRAINT `user_id` FOREIGN KEY (`fk_user_id`) REFERENCES `user_account` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -189,7 +192,7 @@ CREATE TABLE `place` (
 
 LOCK TABLES `place` WRITE;
 /*!40000 ALTER TABLE `place` DISABLE KEYS */;
-INSERT INTO `place` VALUES (1,'Žalgirio arena','Kaunas','Karaliaus Mindaugo prospektas 50','+37061598636','Sporto arenos','http://www.zalgirioarena.lt/','	https://www.facebook.com/Zalgirioarena','Kauno „Žalgirio“ arena – viena didžiausių arenų Baltijos šalyse. 2008 m. Nemuno saloje iškilmingai įkasta kapsulė, kuri simbolizavo  Kauno sporto arenos statybų pradžią. \"Žalgirio\" arenos projektą parengė architektas Eugenijus Miliūnas.','08:00-18:00',2);
+INSERT INTO `place` VALUES (1,1,'Žalgirio arena','Kaunas','Karaliaus Mindaugo prospektas 50','+37061598636','Sporto arenos','http://www.zalgirioarena.lt/','	https://www.facebook.com/Zalgirioarena','Kauno „Žalgirio“ arena – viena didžiausių arenų Baltijos šalyse. 2008 m. Nemuno saloje iškilmingai įkasta kapsulė, kuri simbolizavo  Kauno sporto arenos statybų pradžią. \"Žalgirio\" arenos projektą parengė architektas Eugenijus Miliūnas.','08:00-18:00',2),(19,1,'„Compensa“ koncertų salė','Vilnius','Adresas: Kernavės g. 84, Vilnius','+37065376746','Koncertų salės','http://www.compensakoncertusale.lt','https://www.facebook.com/compensakoncertusale/','„Compensa“ koncertų salė - tai nauja kultūros ir pramogų vieta sostinėje.','',3);
 /*!40000 ALTER TABLE `place` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-08 14:27:45
+-- Dump completed on 2020-05-17 16:26:54

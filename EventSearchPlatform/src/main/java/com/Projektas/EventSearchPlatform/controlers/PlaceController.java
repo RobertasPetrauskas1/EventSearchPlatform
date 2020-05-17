@@ -2,14 +2,17 @@ package com.Projektas.EventSearchPlatform.controlers;
 
 import com.Projektas.EventSearchPlatform.models.Event;
 import com.Projektas.EventSearchPlatform.models.Place;
-import com.Projektas.EventSearchPlatform.repositories.PlaceRepo;
+import com.Projektas.EventSearchPlatform.repositories.*;
 import com.Projektas.EventSearchPlatform.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -20,6 +23,12 @@ public class PlaceController {
 
     @Autowired
     private PlaceRepo placeRepo;
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private PlaceTypeRepo placeTypeRepo;
+    @Autowired
+    private CityRepo cityRepo;
 
     @GetMapping
     public Iterable<Place> getAllPlaces(){ return placeRepo.findAll(); }
@@ -58,6 +67,49 @@ public class PlaceController {
             List<Object> temp = new ArrayList<>();
             temp.add(Messages.errorMsgMap("Wrong imput for limit and offset"));
             return temp;
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> addPlace(@RequestBody @Valid Place place){
+        boolean isUser = userRepo.findById(place.getFk_user_id()).isPresent();
+        boolean isPlaceType = placeTypeRepo.findById(place.getFk_place_type()).isPresent();
+        boolean isCity = cityRepo.findById(place.getFk_city()).isPresent();
+        if(isUser && isPlaceType && isCity) {
+            placeRepo.save(place);
+            return new ResponseEntity<>("Saved", HttpStatus.OK);
+        }else{
+            return Messages.printPlaceValidationErrors(isUser, isPlaceType, isCity);
+        }
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateEvent(@RequestBody @Valid Place place, @PathVariable Integer id){
+        Place u = place;
+        boolean isUser = userRepo.findById(place.getFk_user_id()).isPresent();
+        boolean isPlaceType = placeTypeRepo.findById(place.getFk_place_type()).isPresent();
+        boolean isCity = cityRepo.findById(place.getFk_city()).isPresent();
+
+            if (placeRepo.findById(id).isPresent()) {
+                if (isUser && isPlaceType && isCity) {
+                    u.setId(id);
+                    placeRepo.save(u);
+                    return new ResponseEntity<>("Saved", HttpStatus.OK);
+                } else {
+                    return Messages.printPlaceValidationErrors(isUser, isPlaceType, isCity);
+                }
+            } else {
+                return Messages.errorMsg("Place with id:" + id + " not found");
+            }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteEvent(@PathVariable Integer id){
+        try {
+            placeRepo.deleteById(id);
+            return new ResponseEntity<>("Saved", HttpStatus.OK);
+        }
+        catch(EmptyResultDataAccessException e){
+            return Messages.errorMsg("No place with id: " + id + " found");
         }
     }
 }

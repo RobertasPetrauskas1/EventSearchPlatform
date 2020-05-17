@@ -21,6 +21,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotNull(message = "Event creator id is required!")
     private Integer fk_user_id;
     @NotNull(message = "Event name is required!")
     @Size(max = 255, message = "Name size can't be over 255 characters long!")
