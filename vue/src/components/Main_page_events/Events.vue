@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="max-width: 1300px">
     <div class="row justify-content-center">
         <div class="card-deck">
             <div v-bind:key="event.id" v-for="event in events">

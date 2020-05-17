@@ -19,7 +19,7 @@ export default {
     Header,
     Footer,
     SearchBar,
-    Body,
+    Body
   }
 }
 </script>

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
 --
 -- Host: localhost    Database: semestro_projektas
 -- ------------------------------------------------------
--- Server version	8.0.19
+-- Server version	8.0.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `city`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `city` (
-  `name` varchar(40) COLLATE utf8_lithuanian_ci NOT NULL,
+  `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -48,18 +48,18 @@ DROP TABLE IF EXISTS `event`;
 CREATE TABLE `event` (
   `id` int NOT NULL AUTO_INCREMENT,
   `fk_user_id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8_lithuanian_ci NOT NULL,
-  `fk_event_type` varchar(40) COLLATE utf8_lithuanian_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `fk_event_type` varchar(40) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `date` date NOT NULL,
-  `time` varchar(5) COLLATE utf8_lithuanian_ci NOT NULL,
+  `time` varchar(5) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `duration` int NOT NULL,
-  `fk_city` varchar(40) COLLATE utf8_lithuanian_ci NOT NULL,
+  `fk_city` varchar(40) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `fk_place` int NOT NULL,
-  `phone_number` varchar(12) COLLATE utf8_lithuanian_ci DEFAULT '',
-  `website` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT NULL,
-  `facebook` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT NULL,
-  `description` text COLLATE utf8_lithuanian_ci NOT NULL,
-  `tickets` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `phone_number` varchar(12) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT '',
+  `website` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `facebook` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `tickets` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT NULL,
   `fk_photo` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `event_type` (`fk_event_type`),
@@ -72,7 +72,7 @@ CREATE TABLE `event` (
   CONSTRAINT `event_type` FOREIGN KEY (`fk_event_type`) REFERENCES `event_type` (`name`),
   CONSTRAINT `photo_id` FOREIGN KEY (`fk_photo`) REFERENCES `photos` (`id`),
   CONSTRAINT `place_id` FOREIGN KEY (`fk_place`) REFERENCES `place` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +81,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,1,'Whitesnake & Europe - Kaunas','Koncertai','2020-05-01','20:00',3,'Kaunas',1,'',NULL,'https://www.facebook.com/events/526721851386840/ ','Metų roko šou: grupės „Whitesnake“ ir „Europe“ koncertas!','https://www.bilietai.lt/lit/renginiai/koncertai/atsauktas-whitesnake-ir-europe-304575/?fbclid=IwAR0wOFaYU54Ymbeg-i5WfjB8Z57xf_sAPqsHBQgJ97yj3jOYvSWIXUQWvtM',1),(9,1,'testEvent','Koncertai','2020-05-05','18:00',4,'Kaunas',1,'863567764','https://www.google.com/','','test event description','',1);
+INSERT INTO `event` VALUES (1,1,'Whitesnake & Europe - Kaunas','Koncertai','2020-05-01','20:00',3,'Kaunas',1,'',NULL,'https://www.facebook.com/events/526721851386840/ ','Metų roko šou: grupės „Whitesnake“ ir „Europe“ koncertas!','https://www.bilietai.lt/lit/renginiai/koncertai/atsauktas-whitesnake-ir-europe-304575/?fbclid=IwAR0wOFaYU54Ymbeg-i5WfjB8Z57xf_sAPqsHBQgJ97yj3jOYvSWIXUQWvtM',1),(9,1,'testEvent','Koncertai','2020-05-05','18:00',4,'Kaunas',1,'863567764','https://www.google.com/','','test event description','',1),(24,1,'Woodkid - Vilnius','Koncertai','2020-05-20','20:00',3,'Vilnius',19,'+37068517086',NULL,'https://www.facebook.com/events/686703041859560/','Pagaliau turim retą progą pamatyti Woodkid.Grafikos dizaineris, režisierius, meno vadovas ir dainų kūrėjas viename. Iki šiol Lietuvos taip ir neaplankęs, bet senokai lauktas. Woodkid į Lietuvą atsiveš visą koncertą, naujos muzikos, vizualizacijas ir pribloškiantį šou. Pasirodymas Vilniuje – Woodkid turo dalis. Geros pažinties, tobulo koncerto.','https://www.bilietai.lt/lit/renginiai/koncertai/perkeltas-woodkid-vilnius-303765/?fbclid=IwAR26e8XOkIW_BxPHo-VeFMM82ssjPI2sHCNr3ulQREsi42-0SiyvnzdxJYk',4);
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +93,7 @@ DROP TABLE IF EXISTS `event_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `event_type` (
-  `name` varchar(40) COLLATE utf8_lithuanian_ci NOT NULL,
+  `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -126,7 +126,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (24);
+INSERT INTO `hibernate_sequence` VALUES (25);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +139,7 @@ DROP TABLE IF EXISTS `photos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `photos` (
   `id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8_lithuanian_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -150,7 +150,7 @@ CREATE TABLE `photos` (
 
 LOCK TABLES `photos` WRITE;
 /*!40000 ALTER TABLE `photos` DISABLE KEYS */;
-INSERT INTO `photos` VALUES (1,'event_photos/1.jpg'),(2,'place_photos/2.jpg'),(3,'place_photos/3.jpg');
+INSERT INTO `photos` VALUES (1,'event_photos/1.jpg'),(2,'place_photos/2.jpg'),(3,'place_photos/3.jpg'),(4,'event_photos/4.jpg');
 /*!40000 ALTER TABLE `photos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,15 +164,15 @@ DROP TABLE IF EXISTS `place`;
 CREATE TABLE `place` (
   `id` int NOT NULL AUTO_INCREMENT,
   `fk_user_id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8_lithuanian_ci NOT NULL,
-  `fk_city` varchar(40) COLLATE utf8_lithuanian_ci NOT NULL,
-  `address` varchar(100) COLLATE utf8_lithuanian_ci NOT NULL,
-  `phone_number` varchar(12) COLLATE utf8_lithuanian_ci NOT NULL,
-  `fk_place_type` varchar(40) COLLATE utf8_lithuanian_ci NOT NULL,
-  `website` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT '',
-  `facebook` varchar(255) COLLATE utf8_lithuanian_ci DEFAULT '',
-  `description` text COLLATE utf8_lithuanian_ci NOT NULL,
-  `working_hours` varchar(40) COLLATE utf8_lithuanian_ci DEFAULT '',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `fk_city` varchar(40) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `address` varchar(100) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `phone_number` varchar(12) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `fk_place_type` varchar(40) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `website` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT '',
+  `facebook` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT '',
+  `description` text CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `working_hours` varchar(40) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT '',
   `fk_photo` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `place_city_name` (`fk_city`),
@@ -204,7 +204,7 @@ DROP TABLE IF EXISTS `place_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `place_type` (
-  `name` varchar(40) COLLATE utf8_lithuanian_ci NOT NULL,
+  `name` varchar(40) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -228,10 +228,10 @@ DROP TABLE IF EXISTS `user_account`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_account` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(100) COLLATE utf8_lithuanian_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_lithuanian_ci NOT NULL,
-  `password` varchar(200) COLLATE utf8_lithuanian_ci NOT NULL,
-  `password_salt` varchar(50) COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `user_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `password` varchar(200) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `password_salt` varchar(50) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -255,9 +255,9 @@ DROP TABLE IF EXISTS `user_bio`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_bio` (
   `id` int NOT NULL,
-  `name` varchar(50) COLLATE utf8_lithuanian_ci NOT NULL,
-  `surname` varchar(50) COLLATE utf8_lithuanian_ci NOT NULL,
-  `phone_number` varchar(12) COLLATE utf8_lithuanian_ci DEFAULT '',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `surname` varchar(50) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
+  `phone_number` varchar(12) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT '',
   `subscription` tinyint DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
@@ -282,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-17 16:26:54
+-- Dump completed on 2020-05-17 21:35:06
