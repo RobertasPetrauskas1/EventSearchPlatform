@@ -71,6 +71,33 @@ public class EventController {
         }
     }
 
+    @GetMapping("/search/{str}")
+    public List<Object> searchEvents(@PathVariable("str") String str){
+        List<Event> fullList = eventRepo.searchEvents(str);
+        List<Object> previewList = new ArrayList<>();
+        for(Event e : fullList){
+            previewList.add(e.toPreview());
+        }
+        return previewList;
+    }
+    @GetMapping("/search/city/{city}")
+    public List<Object> searchEventsByCity(@PathVariable("city") String city){
+        List<Event> fullList = eventRepo.searchEventsByCity(city);
+        List<Object> previewList = new ArrayList<>();
+        for(Event e : fullList){
+            previewList.add(e.toPreview());
+        }
+        return previewList;
+    }
+    @GetMapping("/search/category/{category}")
+    public List<Object> searchEventsByCategory(@PathVariable("category") String category){
+        List<Event> fullList = eventRepo.searchEventsByCategory(category);
+        List<Object> previewList = new ArrayList<>();
+        for(Event e : fullList){
+            previewList.add(e.toPreview());
+        }
+        return previewList;
+    }
 
     @PostMapping(params = {"fk_user_id", "name", "fk_event_type", "date", "time", "duration", "fk_city",
                             "fk_place", "phone_number", "website", "facebook", "description", "tickets"})
