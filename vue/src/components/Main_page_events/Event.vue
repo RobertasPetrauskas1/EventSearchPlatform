@@ -1,9 +1,13 @@
 <template>
     <div class="col-sm-4 py-2" style="margin-top: 8%">
     <div class="card shadow" style="width: 19rem; height:450px">
-        <img  class="card-img-top" alt="Responsive image" v-bind:src="photo">
+        <router-link :to="{name: 'Event', params: {eventId: this.event.id}}">
+            <img  class="card-img-top" alt="Responsive image" v-bind:src="photo">
+        </router-link>
         <div class="card-body h-200 text-center">
-              <h5 id="title" class="card-title text-center">{{event.name}}</h5>
+                <router-link style="color: rgb(0, 0, 0)" :to="{name: 'Event', params: {eventId: this.event.id}}">
+                    <h5 id="title" class="card-title text-center">{{event.name}}</h5>
+                </router-link>
               <p class="date text-center">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" d="M14 0H2a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z" clip-rule="evenodd"/>
@@ -16,7 +20,7 @@
                        0 010 15V2a.5.5 0 01.402-.49l5-1a.5.5 0 01.196 0l4.902.98 4.902-.98a.5.5 0 01.415.103zM10 2.41l-4-.8v11.98l4 .8V2.41zm1 
                        11.98l4-.8V1.61l-4 .8v11.98zm-6-.8V1.61l-4 .8v11.98l4-.8z" clip-rule="evenodd"/>
                   </svg>
-              {{place.name}}</p>           
+              {{place.name}}</p>        
         </div>
     </div>
 </div>

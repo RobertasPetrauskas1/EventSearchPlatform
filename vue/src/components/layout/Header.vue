@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #D3D3D3;">
       <div class="container" style="max-width: 800px;">
-        <a href="#" class="navbar-brand">
+        <router-link to="/" class="navbar-brand">
           <img
             src="../../assets/logo.png"
             width="30"
@@ -11,7 +11,7 @@
             alt="logo"
           />
           <span>We</span>Go
-        </a>
+        </router-link>
 
         <button class="navbar-toggler" data-toggle="collapse" data-target="#CollapseMenu">
           <span class="navbar-toggler-icon"></span>

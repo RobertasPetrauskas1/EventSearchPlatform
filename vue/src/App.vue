@@ -2,24 +2,21 @@
   <div id="app">
     <Header />
     <br><br><br>
-    <SearchBar />
-    <Body />
+    <router-view />
+    <router-view name="a" />
     <Footer />
   </div>
 </template>
 
 <script>
-import Body from './components/Body';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import SearchBar from './components/SearchBar';
+
 export default {
   name: 'app',
   components: {
     Header,
-    Footer,
-    SearchBar,
-    Body
+    Footer
   }
 }
 </script>

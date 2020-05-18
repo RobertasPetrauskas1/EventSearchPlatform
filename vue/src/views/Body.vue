@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Events from './Main_page_events/Events'
+import Events from '../components/Main_page_events/Events'
 import axios from 'axios';
 
 export default {
