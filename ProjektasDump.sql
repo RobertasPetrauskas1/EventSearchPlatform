@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.20, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: semestro_projektas
 -- ------------------------------------------------------
--- Server version	8.0.20
+-- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -81,7 +81,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,1,'Whitesnake & Europe - Kaunas','Koncertai','2020-05-01','20:00',3,'Kaunas',1,'',NULL,'https://www.facebook.com/events/526721851386840/ ','Metų roko šou: grupės „Whitesnake“ ir „Europe“ koncertas!','https://www.bilietai.lt/lit/renginiai/koncertai/atsauktas-whitesnake-ir-europe-304575/?fbclid=IwAR0wOFaYU54Ymbeg-i5WfjB8Z57xf_sAPqsHBQgJ97yj3jOYvSWIXUQWvtM',1),(9,1,'testEvent','Koncertai','2020-05-05','18:00',4,'Kaunas',1,'863567764','https://www.google.com/','','test event description','',1),(24,1,'Woodkid - Vilnius','Koncertai','2020-05-20','20:00',3,'Vilnius',19,'+37068517086',NULL,'https://www.facebook.com/events/686703041859560/','Pagaliau turim retą progą pamatyti Woodkid.Grafikos dizaineris, režisierius, meno vadovas ir dainų kūrėjas viename. Iki šiol Lietuvos taip ir neaplankęs, bet senokai lauktas. Woodkid į Lietuvą atsiveš visą koncertą, naujos muzikos, vizualizacijas ir pribloškiantį šou. Pasirodymas Vilniuje – Woodkid turo dalis. Geros pažinties, tobulo koncerto.','https://www.bilietai.lt/lit/renginiai/koncertai/perkeltas-woodkid-vilnius-303765/?fbclid=IwAR26e8XOkIW_BxPHo-VeFMM82ssjPI2sHCNr3ulQREsi42-0SiyvnzdxJYk',4);
+INSERT INTO `event` VALUES (1,1,'Whitesnake & Europe - Kaunas','Koncertai','2020-05-21','20:00',3,'Kaunas',1,'',NULL,'https://www.facebook.com/events/526721851386840/ ','Metų roko šou: grupės „Whitesnake“ ir „Europe“ koncertas!','https://www.bilietai.lt/lit/renginiai/koncertai/atsauktas-whitesnake-ir-europe-304575/?fbclid=IwAR0wOFaYU54Ymbeg-i5WfjB8Z57xf_sAPqsHBQgJ97yj3jOYvSWIXUQWvtM',1),(9,1,'testEvent','Koncertai','2020-05-25','18:00',4,'Kaunas',1,'863567764','https://www.google.com/','','test event description','',1),(24,1,'Woodkid - Vilnius','Koncertai','2020-05-20','20:00',3,'Vilnius',19,'+37068517086',NULL,'https://www.facebook.com/events/686703041859560/','Pagaliau turim retą progą pamatyti Woodkid.Grafikos dizaineris, režisierius, meno vadovas ir dainų kūrėjas viename. Iki šiol Lietuvos taip ir neaplankęs, bet senokai lauktas. Woodkid į Lietuvą atsiveš visą koncertą, naujos muzikos, vizualizacijas ir pribloškiantį šou. Pasirodymas Vilniuje – Woodkid turo dalis. Geros pažinties, tobulo koncerto.','https://www.bilietai.lt/lit/renginiai/koncertai/perkeltas-woodkid-vilnius-303765/?fbclid=IwAR26e8XOkIW_BxPHo-VeFMM82ssjPI2sHCNr3ulQREsi42-0SiyvnzdxJYk',4);
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-17 21:35:06
+-- Dump completed on 2020-05-18 13:34:53

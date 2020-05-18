@@ -69,6 +69,33 @@ public class PlaceController {
             return temp;
         }
     }
+    @GetMapping("/search/{str}")
+    public List<Object> searchPlaces(@PathVariable("str") String str){
+        List<Place> fullList = placeRepo.searchPlaces(str);
+        List<Object> previewList = new ArrayList<>();
+        for(Place e : fullList){
+            previewList.add(e.toPreview());
+        }
+        return previewList;
+    }
+    @GetMapping("/search/city/{city}")
+    public List<Object> searchPlacesByCity(@PathVariable("city") String city){
+        List<Place> fullList = placeRepo.searchPlacesByCity(city);
+        List<Object> previewList = new ArrayList<>();
+        for(Place e : fullList){
+            previewList.add(e.toPreview());
+        }
+        return previewList;
+    }
+    @GetMapping("/search/category/{category}")
+    public List<Object> searchPlacesByCategory(@PathVariable("category") String category){
+        List<Place> fullList = placeRepo.searchPlacesByCategory(category);
+        List<Object> previewList = new ArrayList<>();
+        for(Place e : fullList){
+            previewList.add(e.toPreview());
+        }
+        return previewList;
+    }
 
     @PostMapping
     public ResponseEntity<Object> addPlace(@RequestBody @Valid Place place){
