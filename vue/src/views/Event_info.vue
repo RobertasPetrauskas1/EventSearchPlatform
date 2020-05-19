@@ -1,74 +1,150 @@
 <template>
-    <div class="container">
+    <div v-if="isEventWorking" class="container">
 
-        <img src="images/laimes_kiemas.jpg" alt="event_image" class="event_pic">
+        <img alt="event_image" class="event_pic" v-bind:src="test">
         <!-- renginio pavadinimas -->
         <div class="heading">
-            <span class="event_name">VASAROS STOVYKLA "LAIMĖS KIEMAS"</span>
+            <span class="event_name">{{eventInfo.name}}</span>
         </div>
         <!-- renginio aprasymas -->
         <div class="about_event">
             <!--vietos ikona ir info-->
 
-                <img src="images/time.png" alt="time_icon" class="image_ex">
-                <span class="date">Birželio 2 </span>
-                <span class="time"> 09:00 </span>
+                <img src="../assets/time.png" alt="time_icon" class="image_ex">
+                <span class="date">{{eventInfo.date}} </span>
+                <span class="time"> {{eventInfo.time}}</span>
                 <p></p>
             <!--telefono ikona ir info-->
 
-                <img src="images/smartphone.png" alt="phone_icon" class="image_ex">
-                <span class="phone">867474747</span>
+                <img src="../assets/smartphone.png" alt="phone_icon" class="image_ex">
+                <span class="phone">{{eventInfo.phone_number}}</span>
                 <p></p>
             <!--tipo ikona ir info-->
 
-                <img src="images/folder.png" alt="type_icon" class="image_ex">
-                <span class="type">Stovykla</span>
+                <img src="../assets/folder.png" alt="type_icon" class="image_ex">
+                <span class="type">{{eventInfo.fk_event_type}}</span>
                 <p></p>
             <!--vietos ikona ir info-->
 
-                <img src="images/pin.png" alt="place_icon" class="image_ex"> 
-                <span class="place">Poilsiavietė Pušynas</span>
+                <img src="../assets/pin.png" alt="place_icon" class="image_ex"> 
+                <span  class="place">{{placeInfo.name}}</span>
                 <p></p>
             <!--puslapio ikona ir info-->
 
-                <img src="images/internet.png" alt="page_icon" class="image_ex">
-                <span class="page">www.laimeskiemas.lt</span>
+                <img src="../assets/internet.png" alt="page_icon" class="image_ex">
+                <span class="page">{{eventInfo.facebook}}</span>
                 <p></p>
 
         </div>
         <!--social media-->
         <div class="social_m">
-            <img src="images/facebook.png" alt="facebook_icon" class="social">
-            <img src="images/google-plus.png" alt="google_icon" class="social">
-            <img src="images/twitter.png" alt="twitter_icon" class="social">
+            <img src="../assets/facebook.png" alt="facebook_icon" class="social">
+            <img src="../assets/google-plus.png" alt="google_icon" class="social">
+            <img src="../assets/twitter.png" alt="twitter_icon" class="social">
         </div>
         <!--tekstas apie rengini-->
         <div class="main_text">
-            <p>Kviečiame vaikus (8-14 m.) patirti neišdildomų įspūdžių savaitę “Laimės kiemas” stovykloje su nakvyne, Vilkijos ir Zapyškio rajonuose.</p>
-
-            <p>Stovyklos programoje:</p>
-
-            <p><b>DIENA:</b> jaukiai įsikūrę naujuose nameliuose, susipažinsime su teritorija, aptarsime pareigas bei taisykles. Vakaro programoje - vadovų staigmena bei diskoteka po žvaigždėmis.</p>
-
-            <p><b>PORTO DIENA:</b> žaisime orientacinį stovyklos teritorijai pažinti. Rungsimės krepšinio, futbolo, tinklinio, teniso ir estafečių varžybose. Aktyvia komandų fizine veikla skatinsime bendradarbiavimą, sportiškumą, pagarbą ir lyderystę. Vakaro programoje – talentų šou.</p>
-
-            <p><b>ĮGŪDŽIŲ DIENA:</b> eisime į žygį su girininku, tyrinėsime gamtą ir ugdysime fizinę ištvermę. Tikrinsime naujai įgytas žinias interaktyviame ir išmaniąjame protmūšyje. Vakaro programoje – pokalbiai prie laužo empatijos tema bei edukacinis kinas.</p>
-
-            <p><b>DIENA:</b>gaminsime savo laimės akmenėlius, kalbėsime apie tai, kas slepiasi po laimės sąvoka. Specialių žaidimų pagalba ugdysime emocinį intelektą: mokysimės suvokti, įvardinti ir valdyti savo emocijas per patirtį ir pojūčius. Vakaro programoje – pokalbiai prie laužo baimių bei fobijų tema ir naktinis pasivaikščiojimas.</p> 
-
-            <p><b>POZITYVUMO IR TOLERANCIJOS DIENA:</b> Vyksime į ekskursiją Šv. Juozapo ir Šv. Kūdikėlio Jėzaus Teresės vienuolyne. Tikrinsime savo žinias interaktyviame ir išmaniąjame protmūšyje. Gaminsime ir ragausime sūrį tradiciniame, lietuviškame etnografiniame rūsyje. Vakarinio pokalbio metu diskutuosime apie toleranciją, kitokią pasaulėžiūrą ar gyvenimo būdą. Vakarą užbaigsime pirties ritualais.</p>
-
-            <p><b> UŽDARYMAS:</b> Paskutinę stovyklos dieną rinksime orginaliausią stovyklos kadrą, rišime draugystės apyrankes, iškilmingai uždarysime stovyklą ir įteiksime diplomus.</p>
+            <p><b>Aprašas:</b> {{this.eventInfo.description}}</p>
         </div>
 
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+import c from '@/const'
+
 export default {
+    name: 'Event_info',
+    data() {
+        return {
+            eventInfo: null,
+            test: null,
+            placeInfo: null,
+            isEventWorking: false
+        };
+    },
+    methods: {
+        getEvent(){
+             return axios.get(`${c.serverURL}/event/${this.$route.params.eventId}`)
+                .then((response) => {
+                    this.eventInfo = response.data;
+                    this.isEventWorking = true;
+                })
+                .catch((error) => {
+                    this.eventInfo = "An error occured" + error;
+                });
+        },
+        getPlace(){
+            return axios.get(`${c.serverURL}/place/${this.eventInfo.fk_place}`)
+                .then((response) => {
+                    this.placeInfo = response.data;
+                    this.isPlaceWorking = true;
+                })
+                .catch((error) => {
+                    this.placeInfo = "An error occured" + error
+                });
+        }
+    },
+    async created(){
+        await this.getEvent();
+
+        this.test = `${c.serverURL}/media/${this.eventInfo.fk_photo}`;
+
+        await this.getPlace();
+    }
 }
 </script>
 
 <style scoped>
+.container{
+    max-width: 885px;
+    margin: auto;
 
+}
+.event_pic{
+    padding-bottom: 0%;
+    display: block;
+}
+.event_name{
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+
+}
+.heading{
+    background-color: black;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    width: 885px;
+}
+.about_event{
+    font-size: 25px;
+    text-align: center;
+    font-weight: bolder;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    padding-top: 5px;
+    padding-bottom: 0px;
+    width: 885px;
+}
+.image_ex{
+    width: 3%;
+    height: auto;
+}
+.social_m{
+    margin-top: 10px;
+    text-align: center; 
+    border-bottom: 2px solid black; 
+
+}
+.social{
+    margin: 20px;
+}
+
+.main_text{
+    font-size: 25px;
+    margin-bottom: 100px;
+}
 </style>

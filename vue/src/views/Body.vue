@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import Events from '../components/Main_page_events/Events'
+import Events from '../components/Main_page_events/Events';
 import axios from 'axios';
+import c from '@/const';
 
 export default {
     name: 'Body',
@@ -19,7 +20,7 @@ export default {
         }
     },
     created() {
-        axios.get('http://localhost:8081/event')
+        axios.get(`${c.serverURL}/event`)
             .then(res => this.events = res.data)
             .catch(err => console.log(err));
     }
