@@ -32,7 +32,7 @@
             <!--puslapio ikona ir info-->
 
                 <img src="../assets/internet.png" alt="page_icon" class="image_ex">
-                <span class="page">{{eventInfo.facebook}}</span>
+                <span class="page">{{eventInfo.tickets}}</span>
                 <p></p>
 
         </div>
