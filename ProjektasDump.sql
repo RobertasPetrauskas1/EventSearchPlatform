@@ -72,7 +72,7 @@ CREATE TABLE `event` (
   CONSTRAINT `event_type` FOREIGN KEY (`fk_event_type`) REFERENCES `event_type` (`name`),
   CONSTRAINT `photo_id` FOREIGN KEY (`fk_photo`) REFERENCES `photos` (`id`),
   CONSTRAINT `place_id` FOREIGN KEY (`fk_place`) REFERENCES `place` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (25);
+INSERT INTO `hibernate_sequence` VALUES (26);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,6 +232,7 @@ CREATE TABLE `user_account` (
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `password` varchar(200) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci NOT NULL,
   `password_salt` varchar(50) CHARACTER SET utf8 COLLATE utf8_lithuanian_ci DEFAULT NULL,
+  `role` varchar(45) COLLATE utf8_lithuanian_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -242,7 +243,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES (1,'adminOrg','adminOrg@eventsearch.com','adminOrg',NULL),(6,'Robertas','robertas@pastas.lt','123456',NULL),(12,'Domantas','Domantas@pastas.lt','123456',NULL),(13,'Domantas2','Domantas@pastas.lt','123456',NULL),(15,'dasda54','admin@eventsearch.com','dasdasd',NULL);
+INSERT INTO `user_account` VALUES (1,'admin','admin@eventsearch.com','admin',NULL,'ADMIN'),(6,'Robertas','robertas@pastas.lt','123456',NULL,'USER'),(12,'Domantas','Domantas@pastas.lt','123456',NULL,'USER'),(13,'Domantas2','Domantas@pastas.lt','123456',NULL,'USER'),(15,'dasda54','admin@eventsearch.com','dasdasd',NULL,'USER');
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -282,4 +283,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-18 13:34:53
+-- Dump completed on 2020-05-19 17:17:40
