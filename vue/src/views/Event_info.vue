@@ -31,8 +31,8 @@
                 <p></p>
             <!--puslapio ikona ir info-->
 
-                <img src="../assets/internet.png" alt="page_icon" class="image_ex">
-                <span class="page">{{eventInfo.tickets}}</span>
+                <a v-if="tickets" :href="tickets" class="button">PIRKTI BILIETUS</a>
+                <a v-else class="button">KAINA NEPASKELBTA</a>
                 <p></p>
 
         </div>
@@ -61,7 +61,8 @@ export default {
             eventInfo: null,
             test: null,
             placeInfo: null,
-            isEventWorking: false
+            isEventWorking: false,
+            tickets : null
         };
     },
     methods: {
@@ -92,6 +93,8 @@ export default {
         this.test = `${c.serverURL}/media/${this.eventInfo.fk_photo}`;
 
         await this.getPlace();
+
+        this.tickets = this.eventInfo.tickets
     }
 }
 </script>
@@ -147,4 +150,32 @@ export default {
     font-size: 25px;
     margin-bottom: 100px;
 }
+
+.button {
+	box-shadow: 0px 10px 14px -7px #3e7327;
+	background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+	background-color:#77b55a;
+	border-radius:9px;
+	border:1px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:18px 76px;
+	text-decoration:none;
+	text-shadow:0px 2px 27px #5b8a3c;
+}
+.button:hover {
+	background:linear-gradient(to bottom, #72b352 5%, #77b55a 100%);
+	background-color:#72b352;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+
+
 </style>

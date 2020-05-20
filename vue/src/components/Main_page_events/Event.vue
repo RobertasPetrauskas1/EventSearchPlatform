@@ -35,20 +35,31 @@ export default {
     props: ["event"],
     data() {
         return {
-            place : [],
-            photo : `${c.serverURL}/media/${this.event.fk_photo}`,
+            place : null,
+            photo : ``,
             isEventWorking: false
         }
     },
-    mounted
+    methods: {
+        getPlace(){
+             return axios.get(`${c.serverURL}/place/${this.event.location}`)
+                .then((response) => {
+                    this.place = response.data;
+                })
+                .catch((error) => {
+                    this.events = "An error occured" + error;
+                });
+        }
+    },
+    created
 }
 
-async function mounted(){
-    this.place = await axios.get(`${c.serverURL}/place/${this.event.fk_place}`)
-    .then(res => res.data)
-    .catch(err => console.log(err));
+async function created(){
+    await this.getPlace();
 
     this.isEventWorking = true;
+
+    this.photo = `${c.serverURL}/media/${this.event.photo}`;
   }
 
 </script>

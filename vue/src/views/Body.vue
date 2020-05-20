@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Events v-bind:events="events" />
+    <Events v-on:moreEvents="addEvents" v-bind:events="events" v-bind:hasMoreEvents="hasMoreEvents" />
   </div>
 </template>
 
@@ -16,14 +16,38 @@ export default {
   },
   data() {
     return {
-      events: []
+      events: [],
+      limit : 9,
+      hasMoreEvents: false
     };
   },
-  created() {
-    axios
-      .get(`${c.serverURL}/event`)
-      .then(res => (this.events = res.data))
+  methods:{
+    addEvents(){
+      this.limit += 9;
+    }
+  },
+  async created() {
+    await axios
+      .get(`${c.serverURL}/event?limit=${this.limit}&offset=0`)
+      .then((res) => (this.events = res.data))
       .catch(err => console.log(err));
+
+    if(this.events.length == this.limit)
+        this.hasMoreEvents = true;
+    else
+        this.hasMoreEvents = false;
+  },
+  
+  async updated() {
+    await axios
+      .get(`${c.serverURL}/event?limit=${this.limit}&offset=0`)
+      .then((res) => (this.events = res.data))
+      .catch(err => console.log(err));
+
+    if(this.events.length == this.limit)
+        this.hasMoreEvents = true;
+    else 
+        this.hasMoreEvents = false;
   }
 };
 </script>
