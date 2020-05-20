@@ -33,7 +33,6 @@ const routes = [
     name: "Place",
     component: Place_info,
   },
-
   {
     path: "*",
     components: {
