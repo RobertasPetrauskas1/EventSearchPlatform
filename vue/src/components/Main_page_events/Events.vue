@@ -2,12 +2,11 @@
     <div class="container" style="max-width: 1300px">
     <div class="row justify-content-center" style="min-height: 50vh">
         <div class="card-deck">
-            <div v-bind:key="event.id" v-for="event in events">
-                <Event v-bind:event="event" />
+            <div :key="event.id" v-for="event in events">
+                <Event :event="event" />
             </div>
         </div>
     </div>
-    <button v-if="hasMoreEvents" @click="moreEvents" type="button" style="btn" class="btn btn-secondary btn-lg btn-block">Daugiau renginių</button>
 </div> 
 </template>
 
@@ -18,12 +17,7 @@ export default {
     components: {
         Event
     },
-    props: ["events", "hasMoreEvents"],
-    methods: {
-        moreEvents(){
-            this.$emit('moreEvents');
-        }
-    }
+    props: ["events"]
 }
 </script>
 
