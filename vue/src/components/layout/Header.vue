@@ -4,7 +4,7 @@
       class="navbar navbar-expand-lg navbar-light sticky-top"
       style="background-color: #D3D3D3;"
     >
-      <div class="container" style="max-width: 800px;">
+      <div class="container" style="max-width: 1100px;">
         <router-link to="/" class="navbar-brand">
           <img
             src="../../assets/logo.png"
@@ -37,6 +37,13 @@
               <a href="#" class="nav-link">
                 <button type="button" class="btn btn-outline-info">
                   Vietos
+                </button>
+              </a>
+            </router-link>
+            <router-link to="/newEvent" class="nav-item">
+              <a href="#" class="nav-link">
+                <button type="button" style="margin-right: 0px"  class="btn btn-warning postBtn">
+                  Paskelbk renginį
                 </button>
               </a>
             </router-link>
@@ -189,5 +196,12 @@ export default {
 .item:hover {
   cursor: pointer;
   background-color: darkgoldenrod;
+}
+
+.postBtn {
+  margin-right: 0px;
+  width: 250px;
+  font-weight: bold;
+  border: 2px solid #000;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Events :events="events" />
-    <button v-if="hasMoreEvents" @click="addEvents()" type="button" style="btn" class="btn btn-secondary btn-lg btn-block">Daugiau renginių</button>
+    <button v-if="hasMoreEvents" @click="addEvents()" type="button" style="btn; width:1000px; margin: 0 60px 30px 0;" class="btn btn-secondary btn-lg">Daugiau renginių</button>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       events: [],
-      limit: 9,
+      limit: 3,
       hasMoreEvents: false,
       loaded: 0
     };
