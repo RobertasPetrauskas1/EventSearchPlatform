@@ -49,7 +49,7 @@ public class Messages {
             errors.add("User with given id not found.");
         }
         if(!placeType){
-            errors.add("Invalid event type.");
+            errors.add("Invalid place type.");
         }
         if(!city){
             errors.add("Invalid city name.");

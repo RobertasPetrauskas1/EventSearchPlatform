@@ -17,7 +17,7 @@ import java.util.Collection;
 @Data
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull(message = "User name is required!")
     @Size(min = 6, max = 100, message = "User name size must be between 6 and 100 characters long!")

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "place_type")
 public class PlaceType {
-    @Id
     private String name;
+    @Id
+    private String singular;
 }

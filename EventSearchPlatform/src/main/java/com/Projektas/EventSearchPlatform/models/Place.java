@@ -2,13 +2,12 @@ package com.Projektas.EventSearchPlatform.models;
 
 import com.Projektas.EventSearchPlatform.customValidators.PhoneNumberConstraint;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ import java.util.Map;
 @Table(name = "place")
 public class Place {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull(message = "Place creator id is required!")
     private Integer fk_user_id;
@@ -38,6 +37,7 @@ public class Place {
     @Size(max = 40, message = "Place city name size can't be over 40 characters long!")
     private String fk_city;
     @PhoneNumberConstraint
+    @Nullable
     private String phone_number;
     @Size(max = 255, message = "Place website size can't be over 255 characters long!")
     private String website;

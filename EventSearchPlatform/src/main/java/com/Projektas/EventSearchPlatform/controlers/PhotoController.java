@@ -4,6 +4,7 @@ import com.Projektas.EventSearchPlatform.models.Photo;
 import com.Projektas.EventSearchPlatform.repositories.PhotosRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
@@ -32,5 +33,13 @@ public class PhotoController {
             byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
         }
+    }
+    @PostMapping
+    public ResponseEntity<Object> newImage(@RequestBody String folder){
+        int nextId = photosRepo.getNextId();
+        Photo photo = new Photo();
+        photo.setName(folder + "/" + nextId + ".jpg");
+        photosRepo.save(photo);
+        return new ResponseEntity<Object>("Success", HttpStatus.OK);
     }
 }

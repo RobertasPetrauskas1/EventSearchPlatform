@@ -85,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(ADMIN_URLS)
                 .hasAuthority("ADMIN")
                 .requestMatchers(USER_URLS)
-                .hasAuthority("USER")
+                .hasAnyAuthority("USER", "ADMIN")
                 .and()
                 .csrf().disable()
                 .formLogin().disable()

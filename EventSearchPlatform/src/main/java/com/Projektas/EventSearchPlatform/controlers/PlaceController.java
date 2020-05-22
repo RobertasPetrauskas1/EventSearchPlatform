@@ -30,6 +30,9 @@ public class PlaceController {
     @Autowired
     private CityRepo cityRepo;
 
+    @GetMapping("/nextPlaceId")
+    public int getNextPlaceId(){return placeRepo.getNextId();}
+
     @GetMapping
     public Iterable<Place> getAllPlaces(){ return placeRepo.findAll(); }
 
@@ -99,14 +102,19 @@ public class PlaceController {
 
     @PostMapping
     public ResponseEntity<Object> addPlace(@RequestBody @Valid Place place){
-        boolean isUser = userRepo.findById(place.getFk_user_id()).isPresent();
-        boolean isPlaceType = placeTypeRepo.findById(place.getFk_place_type()).isPresent();
-        boolean isCity = cityRepo.findById(place.getFk_city()).isPresent();
-        if(isUser && isPlaceType && isCity) {
-            placeRepo.save(place);
-            return new ResponseEntity<>("Saved", HttpStatus.OK);
+        if(!placeRepo.findByName(place.getName()).isPresent()) {
+            boolean isUser = userRepo.findById(place.getFk_user_id()).isPresent();
+            boolean isPlaceType = placeTypeRepo.findById(place.getFk_place_type()).isPresent();
+            boolean isPlaceTypeSingular = placeTypeRepo.findByIdSingular(place.getFk_place_type()).isPresent();
+            boolean isCity = cityRepo.findById(place.getFk_city()).isPresent();
+            if (isUser && (isPlaceType || isPlaceTypeSingular) && isCity) {
+                placeRepo.save(place);
+                return new ResponseEntity<>("Saved", HttpStatus.OK);
+            } else {
+                return Messages.printPlaceValidationErrors(isUser, isPlaceType || isPlaceTypeSingular, isCity);
+            }
         }else{
-            return Messages.printPlaceValidationErrors(isUser, isPlaceType, isCity);
+            return new ResponseEntity<Object>("Place already exists.", HttpStatus.CONFLICT);
         }
     }
     @PutMapping("/{id}")
