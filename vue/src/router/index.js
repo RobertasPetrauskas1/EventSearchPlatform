@@ -8,10 +8,20 @@ import Place_info from "../views/Place_info";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import New_Event from "../views/New_Event";
+import AdminUserList from "../views/AdminUserList.vue"
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/admin/users",
+    name: "admin-user-list",
+    components: {
+      a: Header,
+      default: AdminUserList,
+      b: Footer
+    }
+  },
   {
     path: "/",
     components: {

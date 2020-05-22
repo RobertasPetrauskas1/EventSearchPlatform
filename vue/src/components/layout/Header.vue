@@ -81,6 +81,7 @@
         </div>
       </div>
     </nav>
+
     <div class="modal fade" role="dialog" id="loginModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -91,6 +92,7 @@
             </button>
           </div>
 
+        <form action="#" @submit.prevent="login">
           <div class="modal-body">
             <div class="form-group">
               <input
@@ -98,6 +100,7 @@
                 name="username"
                 class="form-control"
                 placeholder="Username"
+                v-model="username"
               />
             </div>
             <div class="form-group">
@@ -106,6 +109,7 @@
                 name="password"
                 class="form-control"
                 placeholder="Password"
+                v-model="password"
               />
             </div>
           </div>
@@ -123,6 +127,7 @@
             </p>
             <button type="submit" class="btn btn-success">Sign in</button>
           </div>
+          </form>
         </div>
       </div>
     </div>
@@ -185,6 +190,24 @@
 <script>
 export default {
   name: "Header",
+  data(){
+    return {
+      username: "",
+      password: "",
+    }
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('retrieveToken', {
+        username: this.username,
+        password: this.password,
+      })
+        .then(res => {
+          console.log(res);
+          this.$router.push('/');
+        })
+    }
+  }
 };
 </script>
 
