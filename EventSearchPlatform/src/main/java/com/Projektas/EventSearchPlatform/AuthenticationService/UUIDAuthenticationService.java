@@ -45,6 +45,7 @@ public class UUIDAuthenticationService implements UserAuthenticationService {
 
     @Override
     public boolean logout(String token) {
+        token = token.replace("\"", "");
         if(active.containsKey(token)) {
             active.remove(token);
             return true;

@@ -50,11 +50,11 @@ public class LoginController {
         }
     }
     @PostMapping("/logout")
-    public String logout(@RequestBody String token) {
+    public ResponseEntity<Object> logout(@RequestBody String token) {
         System.out.println(token);
         if(authentication.logout(token)) {
-            return "Success";
+           return new ResponseEntity<Object>("Success", HttpStatus.OK);
         }
-        return "User with this token not found";
+        return new ResponseEntity<Object>("User with this token not found", HttpStatus.NOT_FOUND);
     }
 }
