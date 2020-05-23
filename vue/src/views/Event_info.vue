@@ -32,7 +32,7 @@
             <!--puslapio ikona ir info-->
 
                 <a v-if="tickets" :href="tickets" class="button">PIRKTI BILIETUS</a>
-                <a v-else class="button">KAINA NEPASKELBTA</a>
+                <a v-else class="button">BILIETU NERA</a>
                 <p></p>
 
         </div>
@@ -94,7 +94,7 @@ export default {
 
         await this.getPlace();
 
-        this.tickets = this.eventInfo.tickets
+        this.tickets = this.eventInfo.tickets;
     }
 }
 </script>
@@ -108,6 +108,8 @@ export default {
 .event_pic{
     padding-bottom: 0%;
     display: block;
+    width: 885px;
+    height: 462px;
 }
 .event_name{
     color: white;

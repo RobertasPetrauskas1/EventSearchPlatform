@@ -4,7 +4,7 @@
       class="navbar navbar-expand-lg navbar-light sticky-top"
       style="background-color: #D3D3D3;"
     >
-      <div class="container" style="max-width: 800px;">
+      <div class="container" style="max-width: 1100px;">
         <router-link to="/" class="navbar-brand">
           <img
             src="../../assets/logo.png"
@@ -40,7 +40,21 @@
                 </button>
               </a>
             </router-link>
-            <div class="dropdown">
+            <router-link v-if="isLoggedIn" to="/newEvent" class="nav-item">
+              <a href="#" class="nav-link">
+                <button type="button" style="margin-right: 0px"  class="btn btn-warning postBtn">
+                  Paskelbk renginį
+                </button>
+              </a>
+            </router-link>
+            <router-link v-if="isLoggedIn" to="/logout" class="nav-item">
+              <a href="#" class="nav-link">
+                <button type="button" style="margin-right: 0px"  class="btn btn-dark">
+                  Atsijungti
+                </button>
+              </a>
+            </router-link>
+            <div v-else class="dropdown">
               <li class="nav-item ml-auto">
                 <a
                   href="#"
@@ -74,6 +88,7 @@
         </div>
       </div>
     </nav>
+
     <div class="modal fade" role="dialog" id="loginModal">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -84,6 +99,7 @@
             </button>
           </div>
 
+        <form action="#" @submit.prevent="login">
           <div class="modal-body">
             <div class="form-group">
               <input
@@ -91,6 +107,7 @@
                 name="username"
                 class="form-control"
                 placeholder="Username"
+                v-model="username"
               />
             </div>
             <div class="form-group">
@@ -99,8 +116,10 @@
                 name="password"
                 class="form-control"
                 placeholder="Password"
+                v-model="password"
               />
             </div>
+            <p v-if="isError" class="error" style="margin-right: 150px;">*{{this.$store.state.error}}</p>
           </div>
 
           <div class="modal-footer">
@@ -116,6 +135,7 @@
             </p>
             <button type="submit" class="btn btn-success">Sign in</button>
           </div>
+          </form>
         </div>
       </div>
     </div>
@@ -129,6 +149,7 @@
             </button>
           </div>
 
+        <form action="#" @submit.prevent="register">
           <div class="modal-body">
             <div class="form-group">
               <input
@@ -136,6 +157,7 @@
                 name="username"
                 class="form-control"
                 placeholder="Username"
+                v-model="username"
               />
             </div>
             <div class="form-group">
@@ -144,16 +166,19 @@
                 name="email"
                 class="form-control"
                 placeholder="Email"
+                v-model="email"
               />
             </div>
             <div class="form-group">
               <input
-                type="text"
+                type="password"
                 name="password"
                 class="form-control"
                 placeholder="Password"
+                v-model="password"
               />
             </div>
+            <p v-if="isError" class="error">*{{this.$store.state.error}}</p>
           </div>
 
           <div class="modal-footer">
@@ -169,6 +194,7 @@
             </p>
             <button type="submit" class="btn btn-success">Sign up</button>
           </div>
+          </form>
         </div>
       </div>
     </div>
@@ -176,8 +202,55 @@
 </template>
 
 <script>
+import $ from 'jquery';
+
 export default {
   name: "Header",
+  data(){
+    return {
+      username: "",
+      password: "",
+      email: ""
+    }
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('retrieveToken', {
+        username: this.username,
+        password: this.password
+      })
+    },
+    register() {
+      this.$store.dispatch('createToken', {
+        username: this.username,
+        email: this.email,
+        password: this.password
+      })
+    },
+    clearError(){
+      this.$store.dispatch('clearError');
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    },
+    isError(){
+      return this.$store.getters.isError
+    }
+  },
+  watch: {
+    isLoggedIn(newValue) {
+      if(newValue) {
+        $('#loginModal, #registrationModal').modal('hide')
+      }
+    }
+  },
+  mounted(){
+    $('#loginModal, #registrationModal').on('hidden.bs.modal', () => {
+      this.clearError();
+    })
+  }
 };
 </script>
 
@@ -189,5 +262,18 @@ export default {
 .item:hover {
   cursor: pointer;
   background-color: darkgoldenrod;
+}
+
+.postBtn {
+  margin-right: 0px;
+  width: 250px;
+  font-weight: bold;
+  border: 2px solid #000;
+}
+
+.error {
+  font-size: 12px;
+  color: #DC143C;
+  display: flex;
 }
 </style>

@@ -1,10 +1,15 @@
 <template>
   <div>
-    <Places
-      v-on:morePlaces="addPlaces"
-      v-bind:places="places"
-      v-bind:hasMorePlaces="hasMorePlaces"
-    />
+    <Places v-bind:places="places" />
+    <button
+      v-if="hasMorePlaces"
+      @click="addPlaces()"
+      type="button"
+      class="btn btn-secondary btn-lg"
+      style="btn; width:1000px; margin-bottom: 30px"
+    >
+      Daugiau vietų
+    </button>
   </div>
 </template>
 
@@ -16,39 +21,36 @@ import c from "@/const";
 export default {
   name: "All_places",
   components: {
-    Places
+    Places,
   },
   data() {
     return {
       places: [],
       limit: 3,
-      hasMorePlaces: false
+      hasMorePlaces: false,
+      loaded: 0,
     };
   },
   methods: {
-    addPlaces() {
-      this.limit += 9;
-    }
+    addPlaces(limit = 6) {
+      this.loadPlaces(limit, this.loaded);
+    },
+    async loadPlaces(limit, offset) {
+      var newPlaces = await axios
+        .get(`${c.serverURL}/place?limit=${limit}&offset=${offset}`)
+        .then((res) => res.data)
+        .catch((err) => console.error(err));
+
+      if (newPlaces.length == limit) this.hasMorePlaces = true;
+      else this.hasMorePlaces = false;
+
+      this.loaded += limit;
+      this.places = this.places.concat(newPlaces);
+    },
   },
-  async created() {
-    await axios
-      .get(`${c.serverURL}/place?limit=${this.limit}&offset=0`)
-      .then(res => (this.places = res.data))
-      .catch(err => console.log(err));
-
-    if (this.places.length == this.limit) this.hasMorePlaces = true;
-    else this.hasMorePlaces = false;
+  created() {
+    this.addPlaces(this.limit);
   },
-
-  async updated() {
-    await axios
-      .get(`${c.serverURL}/place?limit=${this.limit}&offset=0`)
-      .then(res => (this.places = res.data))
-      .catch(err => console.log(err));
-
-    if (this.places.length == this.limit) this.hasMorePlaces = true;
-    else this.hasMorePlaces = false;
-  }
 };
 </script>
 

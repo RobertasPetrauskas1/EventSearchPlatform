@@ -2,7 +2,9 @@ package com.Projektas.EventSearchPlatform.controlers;
 
 import com.Projektas.EventSearchPlatform.models.User;
 import com.Projektas.EventSearchPlatform.repositories.UserRepo;
+import com.Projektas.EventSearchPlatform.AuthenticationService.UserAuthenticationService;
 import com.Projektas.EventSearchPlatform.utils.Messages;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -14,9 +16,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -24,6 +23,8 @@ import java.util.NoSuchElementException;
 @Validated
 @CrossOrigin
 public class UserController {
+    @NonNull
+    UserAuthenticationService authentication;
 
     @Autowired
     private UserRepo userRepo;
@@ -75,7 +76,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUser(@PathVariable Integer id){
         try {
-            User u = userRepo.findById(id).get();
+            User u = userRepo.findById(id).get();   
             return new ResponseEntity<>(u, HttpStatus.OK);
         }
         catch (NoSuchElementException e){
@@ -92,5 +93,4 @@ public class UserController {
             return Messages.errorMsg("No user with id: " + id + " found");
         }
     }
-
 }

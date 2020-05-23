@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Events v-on:moreEvents="addEvents" v-bind:events="events" v-bind:hasMoreEvents="hasMoreEvents" />
+    <Events :events="events" />
+    <button v-if="hasMoreEvents" @click="addEvents()" type="button" class="btn btn-secondary btn-lg" style="btn; width:1000px; margin-bottom: 30px">Daugiau renginių</button>
   </div>
 </template>
 
@@ -17,38 +18,33 @@ export default {
   data() {
     return {
       events: [],
-      limit : 9,
-      hasMoreEvents: false
+      limit: 3,
+      hasMoreEvents: false,
+      loaded: 0
     };
   },
   methods:{
-    addEvents(){
-      this.limit += 9;
+    addEvents(limit = 6){
+      this.loadEvents(limit, this.loaded);
+    },
+    async loadEvents(limit, offset){
+      var newEvents = await axios
+        .get(`${c.serverURL}/event?limit=${limit}&offset=${offset}`)
+        .then((res) => res.data)
+        .catch(err => console.error(err));
+
+      if(newEvents.length == limit)
+          this.hasMoreEvents = true;
+      else
+          this.hasMoreEvents = false;
+
+      this.loaded += limit;
+      this.events = this.events.concat(newEvents);
     }
   },
-  async created() {
-    await axios
-      .get(`${c.serverURL}/event?limit=${this.limit}&offset=0`)
-      .then((res) => (this.events = res.data))
-      .catch(err => console.log(err));
-
-    if(this.events.length == this.limit)
-        this.hasMoreEvents = true;
-    else
-        this.hasMoreEvents = false;
+  created() {
+     this.addEvents(this.limit);
   },
-  
-  async updated() {
-    await axios
-      .get(`${c.serverURL}/event?limit=${this.limit}&offset=0`)
-      .then((res) => (this.events = res.data))
-      .catch(err => console.log(err));
-
-    if(this.events.length == this.limit)
-        this.hasMoreEvents = true;
-    else 
-        this.hasMoreEvents = false;
-  }
 };
 </script>
 

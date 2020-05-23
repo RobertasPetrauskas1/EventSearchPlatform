@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @Table(name = "user_bio")
 public class UserBio {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull(message = "Name is required!")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters long")

@@ -139,15 +139,19 @@ public class EventController {
     }
     @PostMapping
     public ResponseEntity<Object> addEvent(@RequestBody @Valid Event event){
-        boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
-        boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();
-        boolean isCity = cityRepo.findById(event.getFk_city()).isPresent();
-        boolean isPlace = placeRepo.findById(event.getFk_place()).isPresent();
-        if(isUser && isEventType && isCity && isPlace) {
-            eventRepo.save(event);
-            return new ResponseEntity<>("Saved", HttpStatus.OK);
+        if(!eventRepo.findByName(event.getName()).isPresent()) {
+            boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
+            boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();
+            boolean isCity = cityRepo.findById(event.getFk_city()).isPresent();
+            boolean isPlace = placeRepo.findById(event.getFk_place()).isPresent();
+            if (isUser && isEventType && isCity && isPlace) {
+                eventRepo.save(event);
+                return new ResponseEntity<>("Saved", HttpStatus.OK);
+            } else {
+                return Messages.printEventValidationErrors(isUser, isEventType, isCity, isPlace);
+            }
         }else{
-            return Messages.printEventValidationErrors(isUser, isEventType, isCity, isPlace);
+            return new ResponseEntity<Object>("Event already exists.", HttpStatus.CONFLICT);
         }
     }
     @PutMapping("/{id}")

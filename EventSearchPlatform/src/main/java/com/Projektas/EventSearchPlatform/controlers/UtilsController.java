@@ -5,6 +5,7 @@ import com.Projektas.EventSearchPlatform.models.EventType;
 import com.Projektas.EventSearchPlatform.models.PlaceType;
 import com.Projektas.EventSearchPlatform.repositories.CityRepo;
 import com.Projektas.EventSearchPlatform.repositories.EventTypeRepo;
+import com.Projektas.EventSearchPlatform.repositories.PhotosRepo;
 import com.Projektas.EventSearchPlatform.repositories.PlaceTypeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,6 +23,8 @@ public class UtilsController {
     private EventTypeRepo eventTypeRepo;
     @Autowired
     private PlaceTypeRepo placeTypeRepo;
+    @Autowired
+    private PhotosRepo photosRepo;
 
 
     @GetMapping("/cities")
@@ -36,4 +39,6 @@ public class UtilsController {
     public Iterable<PlaceType> getAllPlaceTypes(){
         return placeTypeRepo.findAll();
     }
+    @GetMapping("/nextPhotoId")
+    public int getNextPhotoId(){return photosRepo.getNextId();}
 }

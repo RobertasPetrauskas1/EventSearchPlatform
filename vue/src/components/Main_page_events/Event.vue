@@ -2,7 +2,7 @@
     <div v-if="isEventWorking" class="col-sm-4 py-2" style="margin-top: 8%">
     <div class="card shadow" style="width: 19rem; height:450px">
         <router-link :to="{name: 'Event', params: {eventId: this.event.id}}">
-            <img  class="card-img-top" alt="Responsive image" v-bind:src="photo">
+            <img class="card-img-top event-img" alt="Responsive image" v-bind:src="photo">
         </router-link>
         <div class="card-body h-200 text-center">
                 <router-link style="color: rgb(0, 0, 0)" :to="{name: 'Event', params: {eventId: this.event.id}}">
@@ -92,5 +92,11 @@ async function created(){
     font-size: 12px;
     font-family: sans-serif;  
     padding: 0px 5px;  
+}
+
+.event-img{
+    width: 302px; 
+    height: 201px;
+    object-fit: cover;
 }
 </style>

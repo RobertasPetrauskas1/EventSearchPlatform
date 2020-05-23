@@ -1,0 +1,11 @@
+package com.Projektas.EventSearchPlatform.AuthenticationService;
+
+import com.Projektas.EventSearchPlatform.models.User;
+
+import java.util.Optional;
+
+public interface UserAuthenticationService {
+    Optional<String> login(String username, String password);
+    Optional<User> findByToken(String token);
+    boolean logout(String token);
+}

@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EventRepo extends CrudRepository<Event, Integer> {
 
@@ -20,4 +21,7 @@ public interface EventRepo extends CrudRepository<Event, Integer> {
 
     @Query(value = "SELECT * FROM event WHERE event.fk_event_type = :category ORDER BY event.date", nativeQuery = true)
     public List<Event> searchEventsByCategory(@Param("category") String category);
+
+    @Query(value = "SELECT * FROM event WHERE event.name = :name", nativeQuery = true)
+    Optional<Event> findByName(String name);
 }

@@ -26,7 +26,7 @@
       <!--puslapio ikona ir info-->
 
       <img src="../assets/internet.png" alt="page_icon" class="image_ex" />
-      <span class="page">{{placeInfo.facebook}}</span>
+      <span class="page">{{placeInfo.website}}</span>
       <p></p>
     </div>
     <!--social media-->
@@ -88,6 +88,8 @@ export default {
 .event_pic {
   padding-bottom: 0%;
   display: block;
+  width: 885px;
+  height: 462px;
 }
 .event_name {
   color: white;

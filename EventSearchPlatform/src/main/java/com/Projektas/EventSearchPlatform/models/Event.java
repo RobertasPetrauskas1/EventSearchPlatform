@@ -19,7 +19,7 @@ import java.util.Map;
 @Table(name = "event")
 public class Event {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull(message = "Event creator id is required!")
     private Integer fk_user_id;
