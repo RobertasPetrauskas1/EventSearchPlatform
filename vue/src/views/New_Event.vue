@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    
+    name: 'New_Event'
 }
 </script>
 

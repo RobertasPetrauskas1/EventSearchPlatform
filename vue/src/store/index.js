@@ -8,26 +8,14 @@ Vue.use(Vuex);
 // Create store
 export default new Vuex.Store({
   state: {
-    token: localStorage.getItem("access_token") || null,
-    users: [],
-    currentUser: null,
+    token: sessionStorage.getItem("access_token") || null,
+    error: null
   },
-  getter: {},
+  getters: {
+    isLoggedIn: state => state.token != null,
+    isError: state => state.error != null
+  },
   actions: {
-    async loadUsers({ commit }) {
-      const response = await axios.get("http://localhost:8081/user");
-
-      commit("SET_USERS", response.data);
-
-      let user = JSON.parse(window.localStorage.currentUser);
-      commit("SET_CURRENT_USER", user);
-    },
-    logoutUser({ commit }) {
-      commit("LOGOUT_USER");
-    },
-    loginUser({ commit }, user) {
-      commit("SET_CURRENT_USER", user);
-    },
     retrieveToken({ commit }, credentials) {
       axios
         .post("http://localhost:8081/access/login", {
@@ -37,29 +25,69 @@ export default new Vuex.Store({
         .then((response) => {
           const token = response.data.token;
 
-          localStorage.setItem("access_token", token);
+          sessionStorage.setItem("access_token", token);
           commit("retrieveToken", token);
           return response;
         })
         .catch((error) => {
+          this.state.error = error.response.data.error;
+          console.log(error.response.data.error);
           console.log(error);
         });
     },
+    destroyToken(context){
+      if(context.getters.isLoggedIn){
+         axios
+        .post("http://localhost:8081/access/logout", this.state.token, {
+          headers: {
+            'Content-Type' : 'text/plain'
+          }
+        })
+        .then((response) => {
+          console.log(response.data);
+          sessionStorage.removeItem("access_token");
+          context.commit("destroyToken");
+          return response;
+        })
+        .catch((error) => {
+          sessionStorage.removeItem("access_token");
+          context.commit("destroyToken");
+          console.log(error);
+        });
+      }
+    },
+    createToken(context, credentials){
+      axios
+        .post("http://localhost:8081/access/register", {
+          user_name: credentials.username,
+          email: credentials.email,
+          password: credentials.password
+        })
+        .then((response) => {
+          const token = response.data.token;
+
+          sessionStorage.setItem("access_token", token);
+          context.commit("retrieveToken", token);
+          return response;
+        })
+        .catch((err) => {
+          this.state.error = err.response.data.errors[0];
+          console.log(err);
+        });
+    },
+    clearError(context){
+      context.commit('clearError');
+    }
   },
   mutations: {
-    SET_USERS(state, users) {
-      state.users = users;
-    },
-    LOGOUT_USER(state) {
-      state.currentUser = {};
-      window.localStorage.currentUser = JSON.stringify({});
-    },
-    SET_CURRENT_USER(state, user) {
-      state.currentUser = user;
-      window.localStorage.currentUser = JSON.stringify(user);
-    },
     retrieveToken(state, token) {
       state.token = token;
     },
+    destroyToken(state){
+      state.token = null;
+    },
+    clearError(state){
+      state.error = null;
+    }
   },
 });

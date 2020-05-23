@@ -1,7 +1,7 @@
 <template>
   <div>
     <Events :events="events" />
-    <button v-if="hasMoreEvents" @click="addEvents()" type="button" style="btn; width:1000px; margin: 0 60px 30px 0;" class="btn btn-secondary btn-lg">Daugiau renginių</button>
+    <button v-if="hasMoreEvents" @click="addEvents()" type="button" class="btn btn-secondary btn-lg" style="btn; width:1000px; margin-bottom: 30px">Daugiau renginių</button>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="container" style="max-width: 1300px">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="min-height: 50vh">
       <div class="card-deck">
         <div v-bind:key="place.id" v-for="place in places">
           <Place v-bind:place="place" />

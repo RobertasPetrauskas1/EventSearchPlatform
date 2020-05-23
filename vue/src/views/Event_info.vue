@@ -108,6 +108,8 @@ export default {
 .event_pic{
     padding-bottom: 0%;
     display: block;
+    width: 885px;
+    height: 462px;
 }
 .event_name{
     color: white;

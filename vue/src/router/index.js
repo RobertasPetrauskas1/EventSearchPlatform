@@ -8,18 +8,16 @@ import Place_info from "../views/Place_info";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import New_Event from "../views/New_Event";
-import AdminUserList from "../views/AdminUserList.vue"
+import Logout from "../views/Logout";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/admin/users",
-    name: "admin-user-list",
+    path: "/logout",
+    name: "logout",
     components: {
-      a: Header,
-      default: AdminUserList,
-      b: Footer
+      default: Logout
     }
   },
   {
