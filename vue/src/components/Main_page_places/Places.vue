@@ -7,6 +7,13 @@
         </div>
       </div>
     </div>
+    <button
+      v-if="hasMorePlaces"
+      @click="morePlaces"
+      type="button"
+      style="btn"
+      class="btn btn-secondary btn-lg btn-block"
+    >Daugiau vietų</button>
   </div>
 </template>
 
@@ -15,9 +22,14 @@ import Place from "./Place";
 export default {
   name: "Places",
   components: {
-    Place,
+    Place
   },
-  props: ["places"],
+  props: ["places", "hasMorePlaces"],
+  methods: {
+    morePlaces() {
+      this.$emit("morePlaces");
+    }
+  }
 };
 </script>
 
@@ -30,5 +42,9 @@ export default {
 }
 .card {
   min-height: 690px;
+}
+.btn {
+  background-color: #d3d3d3;
+  margin-bottom: 15px;
 }
 </style>

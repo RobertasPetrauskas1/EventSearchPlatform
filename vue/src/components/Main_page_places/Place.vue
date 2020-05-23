@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-4 py-2" style="margin-top: 8%">
+  <div v-if="isPlaceWorking" class="col-sm-4 py-2" style="margin-top: 8%">
     <div class="card shadow" style="width: 19rem; height:400px">
       <router-link :to="{ name: 'Place', params: { placeId: this.place.id } }">
         <img class="card-img-top" alt="Responsive image" v-bind:src="photo" />
@@ -35,16 +35,25 @@
 
 <script>
 //import axios from "axios";
+import c from "@/const";
 
 export default {
   name: "Place",
   props: ["place"],
   data() {
     return {
-      photo: `http://localhost:8081/media/${this.place.fk_photo}`,
+      photo: ``,
+      isPlaceWorking: false
     };
   },
+  created
 };
+
+function created() {
+  this.isPlaceWorking = true;
+
+  this.photo = `${c.serverURL}/media/${this.place.fk_photo}`;
+}
 </script>
 
 <style scoped>

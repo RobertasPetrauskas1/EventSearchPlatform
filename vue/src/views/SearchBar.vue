@@ -9,17 +9,15 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-        >
-          Visi Miestai
-        </button>
+        >Visi Miestai</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="">Vilnius</a>
-          <a class="dropdown-item" href="">Kaunas</a>
-          <a class="dropdown-item" href="">Klaipėda</a>
-          <a class="dropdown-item" href="">Šiauliai</a>
-          <a class="dropdown-item" href="">Panevėžys</a>
-          <a class="dropdown-item" href="">Alytus</a>
-          <a class="dropdown-item" href="">Palanga</a>
+          <router-link to="/event/search/city/Vilnius" class="dropdown-item">Vilnius</router-link>
+          <router-link to="/event/search/city/Kaunas" class="dropdown-item">Kaunas</router-link>
+          <router-link to="/event/search/city/Klaipėda" class="dropdown-item">Klaipėda</router-link>
+          <router-link to="/event/search/city/Šiauliai" class="dropdown-item">Šiauliai</router-link>
+          <router-link to="/event/search/city/Panevėžys" class="dropdown-item">Panevėžys</router-link>
+          <router-link to="/event/search/city/Alytus" class="dropdown-item">Alytus</router-link>
+          <router-link to="/event/search/city/Palanga" class="dropdown-item">Palanga</router-link>
         </div>
       </div>
       <div class="filter-dropdown dropdown-category dropdown">
@@ -30,18 +28,24 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-        >
-          Kategorijos
-        </button>
+        >Kategorijos</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="">Sportas</a>
-          <a class="dropdown-item" href="">Koncertai</a>
-          <a class="dropdown-item" href="">Festivaliai</a>
-          <a class="dropdown-item" href="">Spektakliai</a>
-          <a class="dropdown-item" href="">Vaikams</a>
-          <a class="dropdown-item" href="">Parodos</a>
-          <a class="dropdown-item" href="">Mokymai</a>
-          <a class="dropdown-item" href="">Minėjimai</a>
+          <router-link to="/event/search/category/Sportas" class="dropdown-item" href>Sportas</router-link>
+          <router-link to="/event/search/category/Koncertai" class="dropdown-item" href>Koncertai</router-link>
+          <router-link
+            to="/event/search/category/Festivaliai"
+            class="dropdown-item"
+            href
+          >Festivaliai</router-link>
+          <router-link
+            to="/event/search/category/Spektakliai"
+            class="dropdown-item"
+            href
+          >Spektakliai</router-link>
+          <router-link to="/event/search/category/Vaikams" class="dropdown-item" href>Vaikams</router-link>
+          <router-link to="/event/search/category/Parodos" class="dropdown-item" href>Parodos</router-link>
+          <router-link to="/event/search/category/Mokymai" class="dropdown-item" href>Mokymai</router-link>
+          <router-link to="/event/search/category/Minėjimai" class="dropdown-item" href>Minėjimai</router-link>
         </div>
       </div>
       <form>
