@@ -31,6 +31,9 @@ public class EventController {
     @Autowired
     private PlaceRepo placeRepo;
 
+    @GetMapping("/nextEventId")
+    public int getNextEventId(){return eventRepo.getNextId();}
+
     @GetMapping
     public Iterable<Event> getAllEvents(){ return eventRepo.findAll(); }
 
@@ -104,7 +107,7 @@ public class EventController {
     public ResponseEntity<Object> addEvent(@RequestParam Integer fk_user_id, @RequestParam String name,
                                          @RequestParam String fk_event_type,
                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                         @RequestParam String time, @RequestParam Integer duration,
+                                         @RequestParam String time, @RequestParam String duration,
                                          @RequestParam String fk_city, @RequestParam Integer fk_place,
                                          @RequestParam(required = false) String phone_number,
                                          @RequestParam(required = false) String website,
@@ -142,13 +145,14 @@ public class EventController {
         if(!eventRepo.findByName(event.getName()).isPresent()) {
             boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
             boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();
+            boolean isEventTypeSingular = eventTypeRepo.findByIdSingular(event.getFk_event_type()).isPresent();
             boolean isCity = cityRepo.findById(event.getFk_city()).isPresent();
             boolean isPlace = placeRepo.findById(event.getFk_place()).isPresent();
-            if (isUser && isEventType && isCity && isPlace) {
+            if (isUser && (isEventType || isEventTypeSingular) && isCity && isPlace) {
                 eventRepo.save(event);
                 return new ResponseEntity<>("Saved", HttpStatus.OK);
             } else {
-                return Messages.printEventValidationErrors(isUser, isEventType, isCity, isPlace);
+                return Messages.printEventValidationErrors(isUser, (isEventType || isEventTypeSingular), isCity, isPlace);
             }
         }else{
             return new ResponseEntity<Object>("Event already exists.", HttpStatus.CONFLICT);
@@ -159,17 +163,18 @@ public class EventController {
         Event u = event;
         boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
         boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();
+        boolean isEventTypeSingular = eventTypeRepo.findByIdSingular(event.getFk_event_type()).isPresent();
         boolean isCity = cityRepo.findById(event.getFk_city()).isPresent();
         boolean isPlace = placeRepo.findById(event.getFk_place()).isPresent();
 
         if(eventRepo.findById(id).isPresent()) {
-            if(isUser && isEventType && isCity && isPlace){
+            if(isUser && (isEventType || isEventTypeSingular) && isCity && isPlace){
                 u.setId(id);
                 eventRepo.save(u);
                 return new ResponseEntity<>("Saved", HttpStatus.OK);
             }
             else{
-                return Messages.printEventValidationErrors(isUser, isEventType, isCity, isPlace);
+                return Messages.printEventValidationErrors(isUser, (isEventType || isEventTypeSingular), isCity, isPlace);
             }
         }
         else {

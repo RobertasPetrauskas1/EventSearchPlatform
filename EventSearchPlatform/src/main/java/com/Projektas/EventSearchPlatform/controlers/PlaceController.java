@@ -118,7 +118,7 @@ public class PlaceController {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateEvent(@RequestBody @Valid Place place, @PathVariable Integer id){
+    public ResponseEntity<Object> updatePlace(@RequestBody @Valid Place place, @PathVariable Integer id){
         Place u = place;
         boolean isUser = userRepo.findById(place.getFk_user_id()).isPresent();
         boolean isPlaceType = placeTypeRepo.findById(place.getFk_place_type()).isPresent();
@@ -138,7 +138,7 @@ public class PlaceController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEvent(@PathVariable Integer id){
+    public ResponseEntity<Object> deletePlace(@PathVariable Integer id){
         try {
             placeRepo.deleteById(id);
             return new ResponseEntity<>("Saved", HttpStatus.OK);

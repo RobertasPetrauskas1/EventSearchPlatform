@@ -24,4 +24,7 @@ public interface EventRepo extends CrudRepository<Event, Integer> {
 
     @Query(value = "SELECT * FROM event WHERE event.name = :name", nativeQuery = true)
     Optional<Event> findByName(String name);
+
+    @Query(value = "SELECT Auto_increment FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = 'event'", nativeQuery = true)
+    int getNextId();
 }

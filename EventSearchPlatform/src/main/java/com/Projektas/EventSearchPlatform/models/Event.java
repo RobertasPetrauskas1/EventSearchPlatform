@@ -36,7 +36,7 @@ public class Event {
     @Size(max = 255, message = "Event time size can't be over 5 characters long!")
     private String time;
     @NotNull(message = "Event duration is required!")
-    private Integer duration;
+    private String duration;
     @NotNull(message = "Event city name is required!")
     @Size(max = 40, message = "Event city name size can't be over 40 characters long!")
     private String fk_city;
