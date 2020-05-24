@@ -1,6 +1,12 @@
 <template>
   <div>
     <Events v-bind:events="City_events" />
+    <button
+      v-if="hasMoreEvents"
+      @click="addEvents()"
+      type="button"
+      class="btn btn-secondary btn-lg customButton"
+    >Daugiau renginių</button>
   </div>
 </template>
 

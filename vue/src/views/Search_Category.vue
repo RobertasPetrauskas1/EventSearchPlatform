@@ -19,13 +19,23 @@ export default {
       City_events: []
     };
   },
-  created() {
-    axios
-      .get(
-        `${c.serverURL}/event/search/category/${this.$route.params.event_type}`
-      )
-      .then(res => (this.City_events = res.data))
-      .catch(err => console.log(err));
+  methods: {
+    readCityInfo() {
+      axios
+        .get(
+          `${c.serverURL}/event/search/category/${this.$route.params.event_type}`
+        )
+        .then(res => (this.City_events = res.data))
+        .catch(err => console.log(err));
+    }
+  },
+  watch: {
+    $route() {
+      this.readCityInfo();
+    }
+  },
+  async created() {
+    await this.readCityInfo();
   }
 };
 </script>

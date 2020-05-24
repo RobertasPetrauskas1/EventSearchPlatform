@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Places from "../components/Main_page_events/Places";
+import Places from "../components/Main_page_places/Places";
 import axios from "axios";
 import c from "@/const";
 
@@ -19,13 +19,23 @@ export default {
       City_places: []
     };
   },
-  created() {
-    axios
-      .get(
-        `${c.serverURL}/place/search/category/${this.$route.params.event_type}`
-      )
-      .then(res => (this.City_places = res.data))
-      .catch(err => console.log(err));
+  methods: {
+    readCityInfo() {
+      axios
+        .get(
+          `${c.serverURL}/place/search/category/${this.$route.params.place_type}`
+        )
+        .then(res => (this.City_places = res.data))
+        .catch(err => console.log(err));
+    }
+  },
+  watch: {
+    $route() {
+      this.readCityInfo();
+    }
+  },
+  async created() {
+    await this.readCityInfo();
   }
 };
 </script>
