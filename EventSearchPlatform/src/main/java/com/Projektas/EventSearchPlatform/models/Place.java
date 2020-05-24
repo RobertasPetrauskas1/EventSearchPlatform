@@ -61,4 +61,10 @@ public class Place {
         body.put("photo", this.fk_photo);
         return body;
     }
+    public Map<String, Object> toName(){
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("id", this.id);
+        body.put("name", this.name);
+        return body;
+    }
 }

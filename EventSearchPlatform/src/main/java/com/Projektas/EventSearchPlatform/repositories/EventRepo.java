@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface EventRepo extends CrudRepository<Event, Integer> {
 
-    @Query(value = "SELECT * FROM event ORDER BY event.date LIMIT ?1 OFFSET ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM event WHERE date >= CURDATE() ORDER BY event.date LIMIT ?1 OFFSET ?2", nativeQuery = true)
     public List<Event> limitAndOffsetEvents(Integer limit, Integer offset);
 
     @Query(value = "SELECT * FROM event WHERE event.name LIKE CONCAT('%',:str,'%') OR event.description LIKE CONCAT('%',:str,'%') ", nativeQuery = true)

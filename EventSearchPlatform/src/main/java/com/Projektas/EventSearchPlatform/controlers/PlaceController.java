@@ -30,6 +30,19 @@ public class PlaceController {
     @Autowired
     private CityRepo cityRepo;
 
+    @GetMapping("/searchNames")
+    public ResponseEntity<Object> searchForPlacesWithName(@RequestBody String search){
+        List<Object> res = new ArrayList<>();
+        List<Place> list = placeRepo.searchPlacesGetName(search);
+        if(!list.isEmpty()){
+            for(Place place : list){
+                res.add(place.toName());
+            }
+            return new ResponseEntity<Object>(res, HttpStatus.OK);
+        }
+        return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/nextPlaceId")
     public int getNextPlaceId(){return placeRepo.getNextId();}
 
