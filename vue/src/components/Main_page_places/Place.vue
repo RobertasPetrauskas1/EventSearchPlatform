@@ -1,6 +1,6 @@
 <template>
-  <div class="col-sm-4 py-2" style="margin-top: 8%">
-    <div class="card shadow" style="width: 19rem; height:450px">
+  <div class="col-lg-4 col-md-6 py-2" style="margin-top: 8%">
+    <div class="card shadow card-fixed-heigth">
       <router-link :to="{ name: 'Place', params: { placeId: this.place.id } }">
         <img class="card-img-top place-img" alt="Responsive image" v-bind:src="photo" />
       </router-link>
@@ -9,7 +9,7 @@
           style="color: rgb(0, 0, 0)"
           :to="{ name: 'Place', params: { placeId: this.place.id } }"
         >
-          <h5 id="title" class="card-title text-center">{{ place.name }}</h5>
+          <h5 id="title" class="card-title text-center my-2">{{ place.name }}</h5>
         </router-link>
         <p class="date text-center">
           <svg
@@ -55,9 +55,13 @@ export default {
   margin-bottom: 0;
 }
 .card-title {
-  font: bold 30px poppins;
-  text-align: left;
-  padding: 15px 5px 0px 5px;
+    font-weight: bold;
+    font-size: 1.6em;
+    text-align: left;
+    margin: 15px 5px 0px 5px;
+    overflow: hidden;
+    max-height: 3.3em;
+    line-height: 1.1em;
 }
 
 .date {
@@ -67,9 +71,12 @@ export default {
   padding: 0px 5px;
 }
 
-.place-img{
-    width: 302px; 
-    height: 201px;
+.place-img{ 
+    height: 10em;
     object-fit: cover;
+}
+
+.card-fixed-heigth {
+    height: 25em;
 }
 </style>

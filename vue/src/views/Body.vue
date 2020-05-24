@@ -1,7 +1,7 @@
 <template>
   <div>
     <Events :events="events" />
-    <button v-if="hasMoreEvents" @click="addEvents()" type="button" class="btn btn-secondary btn-lg" style="btn; width:1000px; margin-bottom: 30px">Daugiau renginių</button>
+    <button v-if="hasMoreEvents" @click="addEvents()" type="button" class="btn btn-secondary btn-lg customButton">Daugiau renginių</button>
   </div>
 </template>
 
@@ -48,4 +48,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.customButton{
+  width:1000px; 
+  margin-bottom: 30px
+}
+</style>

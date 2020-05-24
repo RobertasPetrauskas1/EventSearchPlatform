@@ -5,32 +5,32 @@
             <div class="container">
                 <div class="row ">
                     <div class="col-md-4 col-sm-6 col-xs-12 segment-two md-mb-30 sm-mb-30">
-                        <h2>Information</h2>
+                        <h2>Informacija</h2>
                         <ul>
-                            <li><a href="#">FAQ</a></li>
-                            <li><a href="#">Contacts</a></li>
+                            <li><a href="#">DUK</a></li>
+                            <li><a href="#">Kontaktai</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12 segment-three sm-mb-30">
-                        <h2>Follow Us</h2>
-                        <p>Connect with us through social media</p>
+                        <h2>Sekite mus</h2>
+                        <p>Sekite mus per socialines medijas</p>
                         <a href="#"><i class="fab fa-facebook-square"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12 segment-four sm-mb-30">
-                        <h2>Our Newsletter</h2>
-                        <p>Subscribe to our page to be the first one informed of any new upcoming events</p>
+                        <h2>Mūsų naujienlaiškis</h2>
+                        <p>Prenumeruokite mus, kad būtumėt pirmas informuotas apie naujus renginius</p>
                         <form action="">
                             <input type="email">
-                            <input type="submit" value="Subscribe">
+                            <input type="submit" value="Prenumeruok">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
-    <p class="footer-bottom-text"> All Right Reserved by &copy;WeGo</p>
+    <p class="footer-bottom-text"> Visos teisės priklauso &copy;WeGo</p>
   </div>
 </template>
 
