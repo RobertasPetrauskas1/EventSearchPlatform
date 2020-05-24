@@ -11,6 +11,11 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import New_Event from "../views/New_Event";
 import Logout from "../views/Logout";
+import SearchBarP from "../views/SearchBarP";
+import Search_City_P from "../views/Search_City_P";
+import Search_Input from "../views/Search_Input";
+import Search_Category_P from "../views/Search_Category_P";
+import Search_Input_P from "../views/Search_Input_P";
 
 Vue.use(VueRouter);
 
@@ -43,22 +48,36 @@ const routes = [
   {
     path: "/event/search/city/:city",
     components: {
+      a: Header,
       default: SearchBar,
-      a: Search_City,
+      b: Search_City,
+      c: Footer,
     },
   },
   {
     path: "/event/search/category/:event_type",
     components: {
+      a: Header,
       default: SearchBar,
-      a: Search_Category,
+      b: Search_Category,
+      c: Footer,
+    },
+  },
+  {
+    path: "/event/search/:input",
+    name: "Search",
+    components: {
+      a: Header,
+      default: SearchBar,
+      b: Search_Input,
+      c: Footer,
     },
   },
   {
     path: "/place",
     components: {
       a: Header,
-      default: SearchBar,
+      default: SearchBarP,
       b: All_places,
       c: Footer,
     },
@@ -70,6 +89,34 @@ const routes = [
       a: Header,
       default: Place_info,
       b: Footer,
+    },
+  },
+  {
+    path: "/place/search/city/:city",
+    components: {
+      a: Header,
+      default: SearchBarP,
+      b: Search_City_P,
+      c: Footer,
+    },
+  },
+  {
+    path: "/place/search/category/:place_type",
+    components: {
+      a: Header,
+      default: SearchBarP,
+      b: Search_Category_P,
+      c: Footer,
+    },
+  },
+  {
+    path: "/place/search/:input",
+    name: "SearchP",
+    components: {
+      a: Header,
+      default: SearchBarP,
+      b: Search_Input_P,
+      c: Footer,
     },
   },
   {

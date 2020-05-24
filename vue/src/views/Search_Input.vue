@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Events v-bind:events="City_events" />
+    <Events v-bind:events="input_Results" />
   </div>
 </template>
 
@@ -10,30 +10,30 @@ import axios from "axios";
 import c from "@/const";
 
 export default {
-  name: "Search_City",
+  name: "Search_Input",
   components: {
     Events
   },
   data() {
     return {
-      City_events: []
+      input_Results: []
     };
   },
   methods: {
-    readCityInfo() {
+    readInputResults() {
       axios
-        .get(`${c.serverURL}/event/search/city/${this.$route.params.city}`)
-        .then(res => (this.City_events = res.data))
+        .get(`${c.serverURL}/event/search/${this.$route.params.input}`)
+        .then(res => (this.input_Results = res.data))
         .catch(err => console.log(err));
     }
   },
   watch: {
     $route() {
-      this.readCityInfo();
+      this.readInputResults();
     }
   },
   async created() {
-    await this.readCityInfo();
+    await this.readInputResults();
   }
 };
 </script>

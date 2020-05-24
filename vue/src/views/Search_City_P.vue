@@ -1,29 +1,29 @@
 <template>
   <div>
-    <Events v-bind:events="City_events" />
+    <Places v-bind:places="City_places" />
   </div>
 </template>
 
 <script>
-import Events from "../components/Main_page_events/Events";
+import Places from "../components/Main_page_places/Places";
 import axios from "axios";
 import c from "@/const";
 
 export default {
-  name: "Search_City",
+  name: "City_places",
   components: {
-    Events
+    Places
   },
   data() {
     return {
-      City_events: []
+      City_places: []
     };
   },
   methods: {
     readCityInfo() {
       axios
-        .get(`${c.serverURL}/event/search/city/${this.$route.params.city}`)
-        .then(res => (this.City_events = res.data))
+        .get(`${c.serverURL}/place/search/city/${this.$route.params.city}`)
+        .then(res => (this.City_places = res.data))
         .catch(err => console.log(err));
     }
   },

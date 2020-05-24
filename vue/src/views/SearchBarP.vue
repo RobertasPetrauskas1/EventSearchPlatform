@@ -12,7 +12,7 @@
         >Visi Miestai</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <router-link
-            :to="'/event/search/city/'+ miestas.name"
+            :to="'/place/search/city/'+ miestas.name"
             class="dropdown-item"
             v-for="miestas in miestai"
             :key="miestas.name"
@@ -30,7 +30,7 @@
         >Kategorijos</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <router-link
-            :to="'/event/search/category/'+kategorija.singular"
+            :to="'/place/search/category/'+kategorija.singular"
             class="dropdown-item"
             v-for="kategorija in kategorijos"
             :key="kategorija.name"
@@ -67,7 +67,7 @@ export default {
   methods: {
     readCategoryTypes() {
       axios
-        .get(`${c.serverURL}/utils/eventTypes`)
+        .get(`${c.serverURL}/utils/placeTypes`)
         .then(res => (this.kategorijos = res.data))
         .catch(err => console.log(err));
     },
@@ -78,12 +78,12 @@ export default {
         .catch(err => console.log(err));
     },
     loadSearch() {
-      this.$router.push({ path: `/event/search/${this.search}`, query: {} });
+      this.$router.push({ path: `/place/search/${this.search}`, query: {} });
     }
   },
   watch: {
     $route(to) {
-      if (to.name == "Search") {
+      if (to.name == "SearchP") {
         if (this.search != to.params.input) {
           this.search = to.params.input;
         }
