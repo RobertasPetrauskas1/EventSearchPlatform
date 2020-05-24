@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/user/logout", "GET")
     );
     private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/admin/**"),
             new AntPathRequestMatcher("/user/**"),
             new AntPathRequestMatcher("/**", "POST"),
             new AntPathRequestMatcher("/**", "PUT"),
@@ -49,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             new AntPathRequestMatcher("/**", "DELETE"));
 
     private static final RequestMatcher ADMIN_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/admin/**"),
             new AntPathRequestMatcher("/user/**"));
 
     TokenAuthenticationProvider provider;
@@ -80,8 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationProvider(provider)
                 .addFilterBefore(restAuthenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
-//                .requestMatchers(PROTECTED_URLS)
-//                .hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers(ADMIN_URLS)
                 .hasAuthority("ADMIN")
                 .requestMatchers(USER_URLS)

@@ -122,8 +122,9 @@ const routes = [
   {
     path: "/newEvent",
     name: "newEvent",
-    components: {
-      default: New_Event,
+    component: New_Event,
+    meta: {
+      requiresAuth: true,
     },
   },
   {

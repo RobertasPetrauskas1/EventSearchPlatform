@@ -26,4 +26,7 @@ public interface PlaceRepo extends CrudRepository<Place, Integer> {
 
     @Query(value = "SELECT Auto_increment FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = 'place'", nativeQuery = true)
     int getNextId();
+
+    @Query(value = "SELECT * FROM place WHERE place.name LIKE CONCAT('%',:str,'%')", nativeQuery = true)
+    List<Place> searchPlacesGetName(@Param("str") String str);
 }

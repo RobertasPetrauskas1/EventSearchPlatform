@@ -30,6 +30,19 @@ public class PlaceController {
     @Autowired
     private CityRepo cityRepo;
 
+    @GetMapping("/searchNames")
+    public ResponseEntity<Object> searchForPlacesWithName(@RequestBody String search){
+        List<Object> res = new ArrayList<>();
+        List<Place> list = placeRepo.searchPlacesGetName(search);
+        if(!list.isEmpty()){
+            for(Place place : list){
+                res.add(place.toName());
+            }
+            return new ResponseEntity<Object>(res, HttpStatus.OK);
+        }
+        return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/nextPlaceId")
     public int getNextPlaceId(){return placeRepo.getNextId();}
 
@@ -118,7 +131,7 @@ public class PlaceController {
         }
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateEvent(@RequestBody @Valid Place place, @PathVariable Integer id){
+    public ResponseEntity<Object> updatePlace(@RequestBody @Valid Place place, @PathVariable Integer id){
         Place u = place;
         boolean isUser = userRepo.findById(place.getFk_user_id()).isPresent();
         boolean isPlaceType = placeTypeRepo.findById(place.getFk_place_type()).isPresent();
@@ -138,7 +151,7 @@ public class PlaceController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteEvent(@PathVariable Integer id){
+    public ResponseEntity<Object> deletePlace(@PathVariable Integer id){
         try {
             placeRepo.deleteById(id);
             return new ResponseEntity<>("Saved", HttpStatus.OK);

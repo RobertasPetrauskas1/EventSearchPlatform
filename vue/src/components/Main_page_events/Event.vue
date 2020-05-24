@@ -1,12 +1,12 @@
 <template>
-    <div v-if="isEventWorking" class="col-sm-4 py-2" style="margin-top: 8%">
-    <div class="card shadow" style="width: 19rem; height:450px">
+    <div v-if="isEventWorking" class="col-lg-4 col-md-6 py-2" style="margin-top: 8%">
+    <div class="card shadow card-fixed-heigth">
         <router-link :to="{name: 'Event', params: {eventId: this.event.id}}">
             <img class="card-img-top event-img" alt="Responsive image" v-bind:src="photo">
         </router-link>
         <div class="card-body h-200 text-center">
                 <router-link style="color: rgb(0, 0, 0)" :to="{name: 'Event', params: {eventId: this.event.id}}">
-                    <h5 id="title" class="card-title text-center">{{event.name}}</h5>
+                    <h5 id="title" class="card-title text-center my-2">{{event.name}}</h5>
                 </router-link>
               <p class="date text-center">
                   <svg class="bi bi-calendar" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -73,10 +73,14 @@ async function created(){
 
 }
 .card-title{    
-    font: bold 30px poppins;
+    /* font: bold 30px poppins; */
+    font-weight: bold;
+    font-size: 1.6em;
     text-align: left;
-    padding: 15px 5px 0px 5px;
-    
+    margin: 15px 5px 0px 5px;
+    overflow: hidden;
+    max-height: 3.3em;
+    line-height: 1.1em;
 }
 
 .date{
@@ -95,8 +99,11 @@ async function created(){
 }
 
 .event-img{
-    width: 302px; 
-    height: 201px;
+    height: 10em;
     object-fit: cover;
+}
+
+.card-fixed-heigth {
+    height: 25em;
 }
 </style>

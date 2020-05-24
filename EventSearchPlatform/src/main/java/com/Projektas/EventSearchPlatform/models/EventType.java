@@ -12,8 +12,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "event_type")
 public class EventType {
+    @Size(max = 40)
+    private String name;
     @Id
     @NotNull(message = "Event type name is required")
     @Size(max = 40)
-    private String name;
+    private String singular;
 }

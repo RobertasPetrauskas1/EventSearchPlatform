@@ -1,10 +1,8 @@
 <template>
-  <div class="container" style="max-width: 1300px">
-    <div class="row justify-content-center" style="min-height: 50vh">
+  <div class="container">
+    <div class="row justify-content-center">
       <div class="card-deck">
-        <div v-bind:key="place.id" v-for="place in places">
-          <Place v-bind:place="place" />
-        </div>
+        <Place :key="place.id" v-for="place in places" v-bind:place="place" />
       </div>
     </div>
     <button
@@ -37,14 +35,6 @@ export default {
 .row {
   background-image: linear-gradient
     (to top, #ecedee 0%, #eceeef 75%, #e7e8e9 100%);
-  min-height: 100vh;
   padding: 60px 90px;
-}
-.card {
-  min-height: 690px;
-}
-.btn {
-  background-color: #d3d3d3;
-  margin-bottom: 15px;
 }
 </style>
