@@ -42,6 +42,18 @@ public class PlaceController {
         }
         return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
     }
+    @GetMapping("/allNames")
+    public ResponseEntity<Object> getAllPlaceNames(){
+        List<Object> res = new ArrayList<>();
+        Iterable<Place> list = placeRepo.findAll();
+        if(list.iterator().hasNext()){
+            for(Place place : list){
+                res.add(place.toName());
+            }
+            return new ResponseEntity<Object>(res, HttpStatus.OK);
+        }
+        return new ResponseEntity<Object>(null, HttpStatus.NOT_FOUND);
+    }
 
     @GetMapping("/nextPlaceId")
     public int getNextPlaceId(){return placeRepo.getNextId();}

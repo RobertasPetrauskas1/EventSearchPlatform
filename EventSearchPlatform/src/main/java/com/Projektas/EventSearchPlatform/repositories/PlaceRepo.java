@@ -29,4 +29,7 @@ public interface PlaceRepo extends CrudRepository<Place, Integer> {
 
     @Query(value = "SELECT * FROM place WHERE place.name LIKE CONCAT('%',:str,'%')", nativeQuery = true)
     List<Place> searchPlacesGetName(@Param("str") String str);
+
+    @Query(value = "SELECT * FROM place", nativeQuery = true)
+    List<Place> getAllNames();
 }

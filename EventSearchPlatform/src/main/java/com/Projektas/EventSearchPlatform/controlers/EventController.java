@@ -1,6 +1,7 @@
 package com.Projektas.EventSearchPlatform.controlers;
 
 import com.Projektas.EventSearchPlatform.models.Event;
+import com.Projektas.EventSearchPlatform.models.Place;
 import com.Projektas.EventSearchPlatform.repositories.*;
 import com.Projektas.EventSearchPlatform.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,16 @@ public class EventController {
             return Messages.errorMsg("Event with id:" + id + " not found");
         }
     }
+
+    @GetMapping("/exists")
+    public ResponseEntity<Object> getEventExists(@RequestBody String eventName){
+        Optional<Event> place = eventRepo.findByName(eventName);
+        if(place.isPresent())
+            return new ResponseEntity<Object>("Event already exists", HttpStatus.CONFLICT);
+
+        return new ResponseEntity<Object>("", HttpStatus.OK);
+    }
+
     @GetMapping(params = {"limit", "offset"})
     public List<Object> getEvents(@RequestParam("limit") Integer limit,
                                                @RequestParam("offset") Integer offset){
