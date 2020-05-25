@@ -42,16 +42,16 @@ export default {
   props: ["place"],
   data() {
     return {
-      photo: `http://localhost:8081/media/${this.place.photo}`
+      photo: ``
     };
   },
   created
 };
 
-function created() {
+async function created() {
   this.isPlaceWorking = true;
 
-  this.photo = `${c.serverURL}/media/${this.place.fk_photo}`;
+  this.photo = `${c.serverURL}/media/${this.place.photo}`;
 }
 </script>
 
