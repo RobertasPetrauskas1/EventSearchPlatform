@@ -22,12 +22,8 @@
         <div class="steps" :class="getStepClass(1)">
             <div class="form-group">
                 <label for="sel1">Renginio kategorija</label>
-                <select class="form-control" id="sel1" v-model="eventCat" :class="{invalid: !isValid('eventCat')}">
-                  <option v-for="kategorija in kategorijos" :key="kategorija.name">{{kategorija.singular}}</option>
-                  
-                </select>
+                <v-select :options="kategorijos" :reduce="cat => cat.singular" label="singular" id="sel1" v-model="eventCat" :class="{invalid: !isValid('eventCat')}"/>
               </div>
-          
          </div>
         </div>
         <div class="steps" :class="getStepClass(2)">
@@ -63,20 +59,9 @@
         <div class="steps" :class="getStepClass(5)">
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Renginio vieta</label>
-                <select class="form-control" id="exampleFormControlSelect1" v-model="eventPlace" :class="{invalid: !isValid('eventPlace')}">
-                  <option>-----------</option>
-                  <option>Vilnius</option>
-                  <option>Kaunas</option>
-                  <option>Klaipėda</option>
-                  <option>Šiauliai</option>
-                  <option>Panevėžys</option>
-                  <option>Birštonas</option>
-                  <option>Alytus</option>
-                  <option>Palanga</option>
-                  <option>Kėdainiai</option>
-                  <option>Druskininkai</option>
-                </select>
+                <v-select :options="places" :reduce="p => p.name" label="name" id="exampleFormControlSelect1" v-model="eventPlace" :class="{invalid: !isValid('eventPlace')}"/>
             </div>
+
             <label >Renginio data ir laikas</label>
             <div class="form-group row">
                 <div class="col-10">
@@ -94,7 +79,7 @@
       <div class="col-md text-center">
        <button type="button" class="btnPrev btn btn-outline-success" @click="prevPage" v-show="pageNumber > 1">Atgal</button>
        <button type="button" class="btnNext btn btn-outline-success" @click="nextPage" v-show="maxPageNumber > pageNumber">Toliau</button>
-       <button type="button" class="btnNext btn btn-success" v-show="maxPageNumber == pageNumber">Išsaugoti</button>
+       <button @click="createEvent" type="button" class="btnNext btn btn-success" v-show="maxPageNumber == pageNumber">Išsaugoti</button>
       </div>
      </div>
    
@@ -105,7 +90,9 @@
 <script>
 import axios from "axios";
 import c from "@/const";
-/*eslint no-debugger: "off"*/
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css'
+
 let AllFields = {
   eventCat: {
     validate: () => true,
@@ -144,10 +131,14 @@ let AllFields = {
     validate: () => true,
     page: 5
   },
+
 }
 
 export default {
   name: "New_Event",
+  components: {
+    vSelect
+  },
   data(){
     return {
       eventCat:"-----",
@@ -163,7 +154,8 @@ export default {
       pageNumber:1,
       maxPageNumber:5,
       validatedPages:[],
-      kategorijos:null,
+      kategorijos: [],
+      places: [],
     }
   },
   methods:{
@@ -230,13 +222,37 @@ export default {
     readCategoryTypes() {
       axios
         .get(`${c.serverURL}/utils/eventTypes`)
-        .then(res => (this.kategorijos = res.data))
-        .catch(err => console.log(err));
-    }
+        .then(res => {this.kategorijos = res.data})
+        .catch(err => console.error(err));
     },
-    async created() {
-    await this.readCategoryTypes();
-  
+    readPlaceTypes() {
+      axios.get(`${c.serverURL}/place/allNames`)
+        .then((res) => {this.places = res.data})
+        .catch((err) => {console.error(err)});
+    },
+    createEvent(){
+      axios.post(`${c.serverURL}/event`, {
+        name: this.eventName,
+        fk_event_type: this.eventCat,
+        date: this.eventDate,
+        time: this.eventTime,
+        duration: '4h',
+        fk_city: 'Kaunas',
+        fk_place: this.eventPlace,
+        phone_number: this.phoneNumb,
+        website: this.pageLink,
+        facebook: this.webSite,
+        description: this.eventDes,
+        tickets: null,
+        fk_photo: null
+      })
+        .then((res) => {this.places = res.data})
+        .catch((err) => {console.log(err)});
+    }
+  },
+  created() {
+    this.readCategoryTypes();
+    this.readPlaceTypes();
   }
 }
 
@@ -332,4 +348,5 @@ body{
         margin-top: 130px
     }
    }
+  
 </style>
