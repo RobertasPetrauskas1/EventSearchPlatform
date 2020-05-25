@@ -22,26 +22,47 @@ export default {
   },
   data() {
     return {
-      City_events: []
+      City_events: [],
+      limit: 3,
+      hasMoreEvents: false,
+      loaded: 0
     };
   },
   methods: {
-    readCityInfo() {
-      axios
-        .get(`${c.serverURL}/event/search/city/${this.$route.params.city}`)
-        .then(res => (this.City_events = res.data))
+    addEvents(limit = 6) {
+      this.loadEvents(limit, this.loaded);
+    },
+    async loadEvents(limit, offset) {
+      var newEvents = await axios
+        .get(
+          `${c.serverURL}/event/search/city/${this.$route.params.city}?limit=${limit}&offset=${offset}`
+        )
+        .then(res => res.data)
         .catch(err => console.log(err));
+
+      if (newEvents.length == limit) this.hasMoreEvents = true;
+      else this.hasMoreEvents = false;
+
+      this.loaded += limit;
+      this.City_events = this.City_events.concat(newEvents);
     }
   },
   watch: {
     $route() {
-      this.readCityInfo();
+      this.City_events = [];
+      this.loaded = 0;
+      this.addEvents();
     }
   },
-  async created() {
-    await this.readCityInfo();
+  created() {
+    this.addEvents();
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.customButton {
+  width: 1000px;
+  margin-bottom: 30px;
+}
+</style>
