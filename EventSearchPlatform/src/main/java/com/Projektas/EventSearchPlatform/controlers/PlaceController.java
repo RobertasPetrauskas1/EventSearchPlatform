@@ -97,32 +97,84 @@ public class PlaceController {
             return temp;
         }
     }
-    @GetMapping("/search/{str}")
-    public List<Object> searchPlaces(@PathVariable("str") String str){
-        List<Place> fullList = placeRepo.searchPlaces(str);
-        List<Object> previewList = new ArrayList<>();
-        for(Place e : fullList){
-            previewList.add(e.toPreview());
+    @GetMapping(value = "/search/{str}", params = {"limit", "offset"})
+    public List<Object> searchPlaces(@PathVariable("str") String str, @RequestParam("limit") Integer limit,
+                                     @RequestParam("offset") Integer offset){
+        try {
+            if(limit > 0 && offset >= 0) {
+                List<Place> fullList = placeRepo.searchPlaces(limit, offset, str);
+                List<Object> previewList = new ArrayList<>();
+                for (Place e : fullList) {
+                    previewList.add(e.toPreview());
+                }
+                return previewList;
+            }else{
+                Map<String, Object> err = new LinkedHashMap<>();
+                err.put("timestamp", LocalDateTime.now());
+                err.put("status", HttpStatus.BAD_REQUEST);
+                err.put("error", "Limit cant be less than 1. Offset cant be less than 0.");
+                List<Object> list = new ArrayList<>();
+                list.add(err);
+                return list;
+            }
+        }catch (MethodArgumentTypeMismatchException e){
+            List<Object> temp = new ArrayList<>();
+            temp.add(Messages.errorMsgMap("Wrong imput for limit and offset"));
+            return temp;
         }
-        return previewList;
     }
-    @GetMapping("/search/city/{city}")
-    public List<Object> searchPlacesByCity(@PathVariable("city") String city){
-        List<Place> fullList = placeRepo.searchPlacesByCity(city);
-        List<Object> previewList = new ArrayList<>();
-        for(Place e : fullList){
-            previewList.add(e.toPreview());
+    @GetMapping(value = "/search/city/{city}", params = {"limit", "offset"})
+    public List<Object> searchPlacesByCity(@PathVariable("city") String city, @RequestParam("limit") Integer limit,
+                                           @RequestParam("offset") Integer offset){
+        try {
+            if(limit > 0 && offset >= 0) {
+                List<Place> fullList = placeRepo.searchPlacesByCity(limit, offset, city);
+                List<Object> previewList = new ArrayList<>();
+                for (Place e : fullList) {
+                    previewList.add(e.toPreview());
+                }
+                return previewList;
+            }else{
+                Map<String, Object> err = new LinkedHashMap<>();
+                err.put("timestamp", LocalDateTime.now());
+                err.put("status", HttpStatus.BAD_REQUEST);
+                err.put("error", "Limit cant be less than 1. Offset cant be less than 0.");
+                List<Object> list = new ArrayList<>();
+                list.add(err);
+                return list;
+            }
+        }catch (MethodArgumentTypeMismatchException e){
+            List<Object> temp = new ArrayList<>();
+            temp.add(Messages.errorMsgMap("Wrong imput for limit and offset"));
+            return temp;
         }
-        return previewList;
     }
-    @GetMapping("/search/category/{category}")
-    public List<Object> searchPlacesByCategory(@PathVariable("category") String category){
-        List<Place> fullList = placeRepo.searchPlacesByCategory(category);
-        List<Object> previewList = new ArrayList<>();
-        for(Place e : fullList){
-            previewList.add(e.toPreview());
+    @GetMapping(value = "/search/category/{category}", params = {"limit", "offset"})
+    public List<Object> searchPlacesByCategory(@PathVariable("category") String category, @RequestParam("limit") Integer limit,
+                                               @RequestParam("offset") Integer offset){
+        try {
+            if(limit > 0 && offset >= 0) {
+                List<Place> fullList = placeRepo.searchPlacesByCategory(limit, offset, category);
+                List<Object> previewList = new ArrayList<>();
+                for (Place e : fullList) {
+                    previewList.add(e.toPreview());
+                }
+                return previewList;
+            }
+            else{
+                Map<String, Object> err = new LinkedHashMap<>();
+                err.put("timestamp", LocalDateTime.now());
+                err.put("status", HttpStatus.BAD_REQUEST);
+                err.put("error", "Limit cant be less than 1. Offset cant be less than 0.");
+                List<Object> list = new ArrayList<>();
+                list.add(err);
+                return list;
+            }
+        }catch (MethodArgumentTypeMismatchException e){
+            List<Object> temp = new ArrayList<>();
+            temp.add(Messages.errorMsgMap("Wrong imput for limit and offset"));
+            return temp;
         }
-        return previewList;
     }
 
     @PostMapping

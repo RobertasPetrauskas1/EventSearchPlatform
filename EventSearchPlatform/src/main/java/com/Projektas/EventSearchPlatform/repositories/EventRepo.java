@@ -13,14 +13,14 @@ public interface EventRepo extends CrudRepository<Event, Integer> {
     @Query(value = "SELECT * FROM event WHERE date >= CURDATE() ORDER BY event.date LIMIT ?1 OFFSET ?2", nativeQuery = true)
     public List<Event> limitAndOffsetEvents(Integer limit, Integer offset);
 
-    @Query(value = "SELECT * FROM event WHERE event.name LIKE CONCAT('%',:str,'%') OR event.description LIKE CONCAT('%',:str,'%') ", nativeQuery = true)
-    public List<Event> searchEvents(@Param("str") String str);
+    @Query(value = "SELECT * FROM event WHERE event.name LIKE CONCAT('%',:str,'%') OR event.description LIKE CONCAT('%',:str,'%') ORDER BY event.date LIMIT :limit OFFSET :offset ", nativeQuery = true)
+    public List<Event> searchEvents(@Param("limit")Integer limit, @Param("offset")Integer offset, @Param("str") String str);
 
-    @Query(value = "SELECT * FROM event WHERE event.fk_city = :city ORDER BY event.date", nativeQuery = true)
-    public List<Event> searchEventsByCity(@Param("city") String city);
+    @Query(value = "SELECT * FROM event WHERE event.fk_city = :city ORDER BY event.date LIMIT :limit OFFSET :offset", nativeQuery = true)
+    public List<Event> searchEventsByCity(@Param("limit") Integer limit, @Param("offset")Integer offset ,@Param("city") String city);
 
-    @Query(value = "SELECT * FROM event WHERE event.fk_event_type = :category ORDER BY event.date", nativeQuery = true)
-    public List<Event> searchEventsByCategory(@Param("category") String category);
+    @Query(value = "SELECT * FROM event WHERE event.fk_event_type = :category ORDER BY event.date LIMIT :limit OFFSET :offset", nativeQuery = true)
+    public List<Event> searchEventsByCategory(@Param("limit")Integer limit, @Param("offset")Integer offset, @Param("category") String category);
 
     @Query(value = "SELECT * FROM event WHERE event.name = :name", nativeQuery = true)
     Optional<Event> findByName(String name);
