@@ -30,12 +30,14 @@ public class PhotoController {
     public ResponseEntity<byte[]> getImage(@PathVariable Integer id) throws IOException{
         try {
             Photo photo = photosRepo.findById(id).get();
-            ClassPathResource imgFile = new ClassPathResource("user_upload/" + photo.getName());
-            byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+//            ClassPathResource imgFile = new ClassPathResource("user_upload/" + photo.getName());
+            File imgFile = new File("C:\\Users\\robpet2\\Desktop\\SemestroProjektas\\EventSearchPlatform\\src\\main\\resources\\user_upload\\" + photo.getName());
+            byte[] bytes = Files.readAllBytes(Paths.get(imgFile.getPath()));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
         }catch (NoSuchElementException e) {
-            ClassPathResource imgFile = new ClassPathResource("user_upload/notFound.jpg");
-            byte[] bytes = StreamUtils.copyToByteArray(imgFile.getInputStream());
+//            ClassPathResource imgFile = new ClassPathResource("user_upload/notFound.jpg");
+            File imgFile = new File("C:\\Users\\robpet2\\Desktop\\SemestroProjektas\\EventSearchPlatform\\src\\main\\resources\\user_upload\\notFound.jpg");
+            byte[] bytes = Files.readAllBytes(Paths.get(imgFile.getPath()));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
         }
     }
@@ -48,12 +50,17 @@ public class PhotoController {
         return new ResponseEntity<Object>("Success", HttpStatus.OK);
     }
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Object> uploadImage(@RequestParam("img") MultipartFile img) throws IOException {
+    public ResponseEntity<Object> uploadEventImage(@RequestParam("img") MultipartFile img) throws IOException {
         int nextId = photosRepo.getNextId();
-        File convertFile = new File(img.getOriginalFilename());
-        convertFile.createNewFile();
+        File convertFile = new File("C:\\Users\\robpet2\\Desktop\\SemestroProjektas\\EventSearchPlatform\\src\\main\\resources\\user_upload\\event_photos\\" + nextId + ".jpg");
+        boolean created = convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(img.getBytes());
-        return new ResponseEntity<Object>("Success", HttpStatus.OK);
+        if(created) {
+            newImage("event_photos");
+            return new ResponseEntity<Object>(nextId, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Object>("Failed", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
