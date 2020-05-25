@@ -205,6 +205,7 @@ public class EventController {
     @PostMapping
     public ResponseEntity<Object> addEvent(@RequestBody @Valid Event event){
         if(!eventRepo.findByName(event.getName()).isPresent()) {
+            event.setId(null);
             boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
             boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();
             boolean isEventTypeSingular = eventTypeRepo.findByIdSingular(event.getFk_event_type()).isPresent();

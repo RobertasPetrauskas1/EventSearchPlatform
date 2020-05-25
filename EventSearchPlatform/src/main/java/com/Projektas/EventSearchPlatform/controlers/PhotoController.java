@@ -11,10 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.NoSuchElementException;
@@ -46,6 +45,15 @@ public class PhotoController {
         Photo photo = new Photo();
         photo.setName(folder + "/" + nextId + ".jpg");
         photosRepo.save(photo);
+        return new ResponseEntity<Object>("Success", HttpStatus.OK);
+    }
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> uploadImage(@RequestParam("img") MultipartFile img) throws IOException {
+        int nextId = photosRepo.getNextId();
+        File convertFile = new File(img.getOriginalFilename());
+        convertFile.createNewFile();
+        FileOutputStream fout = new FileOutputStream(convertFile);
+        fout.write(img.getBytes());
         return new ResponseEntity<Object>("Success", HttpStatus.OK);
     }
 }
