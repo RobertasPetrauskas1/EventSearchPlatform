@@ -30,12 +30,14 @@ public class PhotoController {
     public ResponseEntity<byte[]> getImage(@PathVariable Integer id) throws IOException{
         try {
             Photo photo = photosRepo.findById(id).get();
-//            ClassPathResource imgFile = new ClassPathResource("user_upload/" + photo.getName());
+            //File imgFile = new File("C:\\Users\\redak\\OneDrive\\Desktop\\Sem_projektas\\EventSearchPlatform\\src\\main\\resources" + photo.getName());
+            //File imgFile = new File("C:\\Users\\aiste\\OneDrive\\Desktop\\projektas\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\" + photo.getName());
             File imgFile = new File("C:\\Users\\Domantas\\Desktop\\2nd\\Projektas\\EventSearchPlatform\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\" + photo.getName());
             byte[] bytes = Files.readAllBytes(Paths.get(imgFile.getPath()));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
         }catch (NoSuchElementException e) {
-//            ClassPathResource imgFile = new ClassPathResource("user_upload/notFound.jpg");
+            //File imgFile = new File("C:\\Users\\redak\\OneDrive\\Desktop\\Sem_projektas\\EventSearchPlatform\\src\\main\\resources");
+            //File imgFile = new File("C:\\Users\\aiste\\OneDrive\\Desktop\\projektas\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\notFound.jpg");
             File imgFile = new File("C:\\Users\\Domantas\\Desktop\\2nd\\Projektas\\EventSearchPlatform\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\notFound.jpg");
             byte[] bytes = Files.readAllBytes(Paths.get(imgFile.getPath()));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
@@ -54,6 +56,8 @@ public class PhotoController {
         int nextId = photosRepo.getNextId();
         System.out.println(img.getOriginalFilename());
         File convertFile = new File("C:\\Users\\Domantas\\Desktop\\2nd\\Projektas\\EventSearchPlatform\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\event_photos\\" + nextId + ".jpg");
+        //File convertFile = new File("C:\\Users\\redak\\OneDrive\\Desktop\\Sem_projektas\\EventSearchPlatform\\src\\main\\resources" + nextId + ".jpg");
+        //File convertFile = new File("C:\\Users\\aiste\\OneDrive\\Desktop\\projektas\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\event_photos\\" + nextId + ".jpg");
         boolean created = convertFile.createNewFile();
         if (!created){
             boolean deleted = convertFile.delete();
