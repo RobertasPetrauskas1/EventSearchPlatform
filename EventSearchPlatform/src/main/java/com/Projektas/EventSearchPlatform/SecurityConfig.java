@@ -88,11 +88,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(USER_URLS)
                 .hasAnyAuthority("USER", "ADMIN")
                 .and()
+                .cors().and()
                 .csrf().disable()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .logout().disable();
     }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {
