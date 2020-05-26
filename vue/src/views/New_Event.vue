@@ -59,7 +59,7 @@
         <div class="steps" :class="getStepClass(5)">
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Renginio vieta</label>
-                <v-select :options="places" :reduce="p => p.name" label="name" id="exampleFormControlSelect1" v-model="eventPlace" :class="{invalid: !isValid('eventPlace')}"/>
+                <v-select :options="places" :reduce="p => p.id" label="name" id="exampleFormControlSelect1" v-model="eventPlace" :class="{invalid: !isValid('eventPlace')}"/>
             </div>
 
             <label >Renginio data ir laikas</label>
@@ -233,6 +233,7 @@ export default {
     },
     createEvent(){
       axios.post(`${c.serverURL}/event`, {
+        fk_user_id: 1,
         name: this.eventName,
         fk_event_type: this.eventCat,
         date: this.eventDate,
@@ -245,12 +246,16 @@ export default {
         facebook: this.webSite,
         description: this.eventDes,
         tickets: null,
-        fk_photo: null
+        fk_photo: 0
       }, {
-        'Authorization': 'Bearer ' + this.token
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
       })
         .then((res) => {this.places = res.data})
         .catch((err) => {console.log(err)});
+
+        this.$router.push('/');
     }
   },
   computed:mapState(['token']),

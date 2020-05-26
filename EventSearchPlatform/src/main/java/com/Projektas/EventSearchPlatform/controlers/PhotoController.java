@@ -31,12 +31,12 @@ public class PhotoController {
         try {
             Photo photo = photosRepo.findById(id).get();
 //            ClassPathResource imgFile = new ClassPathResource("user_upload/" + photo.getName());
-            File imgFile = new File("C:\\Users\\robpet2\\Desktop\\SemestroProjektas\\EventSearchPlatform\\src\\main\\resources\\user_upload\\" + photo.getName());
+            File imgFile = new File("C:\\Users\\Domantas\\Desktop\\2nd\\Projektas\\EventSearchPlatform\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\" + photo.getName());
             byte[] bytes = Files.readAllBytes(Paths.get(imgFile.getPath()));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
         }catch (NoSuchElementException e) {
 //            ClassPathResource imgFile = new ClassPathResource("user_upload/notFound.jpg");
-            File imgFile = new File("C:\\Users\\robpet2\\Desktop\\SemestroProjektas\\EventSearchPlatform\\src\\main\\resources\\user_upload\\notFound.jpg");
+            File imgFile = new File("C:\\Users\\Domantas\\Desktop\\2nd\\Projektas\\EventSearchPlatform\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\notFound.jpg");
             byte[] bytes = Files.readAllBytes(Paths.get(imgFile.getPath()));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
         }
@@ -52,7 +52,7 @@ public class PhotoController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadEventImage(@RequestParam("img") MultipartFile img) throws IOException {
         int nextId = photosRepo.getNextId();
-        File convertFile = new File("C:\\Users\\robpet2\\Desktop\\SemestroProjektas\\EventSearchPlatform\\src\\main\\resources\\user_upload\\event_photos\\" + nextId + ".jpg");
+        File convertFile = new File("C:\\Users\\Domantas\\Desktop\\2nd\\Projektas\\EventSearchPlatform\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\event_photos\\" + nextId + ".jpg");
         boolean created = convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(img.getBytes());
