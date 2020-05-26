@@ -37,4 +37,7 @@ export default {
   padding: 10% 90px 15%;
   font-size: 200%;
 }
+.card-deck{
+  width: 100%;
+}
 </style>

@@ -52,8 +52,15 @@ public class PhotoController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadEventImage(@RequestParam("img") MultipartFile img) throws IOException {
         int nextId = photosRepo.getNextId();
+        System.out.println(img.getOriginalFilename());
         File convertFile = new File("C:\\Users\\Domantas\\Desktop\\2nd\\Projektas\\EventSearchPlatform\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\event_photos\\" + nextId + ".jpg");
         boolean created = convertFile.createNewFile();
+        if (!created){
+            boolean deleted = convertFile.delete();
+            if(deleted){
+                created = convertFile.createNewFile();
+            }
+        }
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(img.getBytes());
         if(created) {

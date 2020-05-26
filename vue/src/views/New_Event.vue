@@ -41,7 +41,7 @@
             <div class="form-group">
               <!-- Nuotrauka -->
               <label for="exampleFormControlFile1">Pasirinkite renginio nuotrauka</label>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1">
+              <input type="file" class="form-control-file" id="exampleFormControlFile1" name="img" @change="selectedFile" multiple>
             </div>
           
          </div>
@@ -157,6 +157,7 @@ export default {
       validatedPages:[],
       kategorijos: [],
       places: [],
+      photoID: 0
     }
   },
   methods:{
@@ -246,7 +247,7 @@ export default {
         facebook: this.webSite,
         description: this.eventDes,
         tickets: null,
-        fk_photo: 0
+        fk_photo: this.photoID
       }, {
         headers: {
           'Authorization': 'Bearer ' + this.token
@@ -256,6 +257,27 @@ export default {
         .catch((err) => {console.log(err)});
 
         this.$router.push('/');
+    },
+    async selectedFile(event) {
+      event.preventDefault();
+      let file = event.target.files[0];
+
+      let formData = new FormData();
+      formData.append('img', file);
+
+      this.photoID = await axios.post(`${c.serverURL}/media/upload`, formData, {
+        headers: {
+          'Authorization': 'Bearer ' + this.token
+        }
+      })
+        .then((response) => {
+          return response.data;
+        })
+        .catch((error) =>{
+          console.log(error.response);
+      });
+
+      console.log(this.photoID);
     }
   },
   computed:mapState(['token']),
