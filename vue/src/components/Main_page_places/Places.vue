@@ -5,13 +5,7 @@
         <Place :key="place.id" v-for="place in places" v-bind:place="place" />
       </div>
     </div>
-    <button
-      v-if="hasMorePlaces"
-      @click="morePlaces"
-      type="button"
-      style="btn"
-      class="btn btn-secondary btn-lg btn-block"
-    >Daugiau vietų</button>
+    <div class="alert" v-if="IsEmpty">Vietų nėra</div>
   </div>
 </template>
 
@@ -22,10 +16,10 @@ export default {
   components: {
     Place
   },
-  props: ["places", "hasMorePlaces"],
-  methods: {
-    morePlaces() {
-      this.$emit("morePlaces");
+  props: ["places"],
+  computed: {
+    IsEmpty() {
+      return this.places.length == 0;
     }
   }
 };
@@ -36,5 +30,11 @@ export default {
   background-image: linear-gradient
     (to top, #ecedee 0%, #eceeef 75%, #e7e8e9 100%);
   padding: 60px 90px;
+}
+.alert {
+  background-image: linear-gradient
+    (to top, #ecedee 0%, #eceeef 75%, #e7e8e9 100%);
+  padding: 10% 90px 15%;
+  font-size: 200%;
 }
 </style>

@@ -1,7 +1,12 @@
 <template>
   <div>
     <Events :events="events" />
-    <button v-if="hasMoreEvents" @click="addEvents()" type="button" class="btn btn-secondary btn-lg customButton">Daugiau renginių</button>
+    <button
+      v-if="hasMoreEvents"
+      @click="addEvents()"
+      type="button"
+      class="btn btn-secondary btn-lg customButton"
+    >Daugiau renginių</button>
   </div>
 </template>
 
@@ -23,34 +28,32 @@ export default {
       loaded: 0
     };
   },
-  methods:{
-    addEvents(limit = 6){
+  methods: {
+    addEvents(limit = 6) {
       this.loadEvents(limit, this.loaded);
     },
-    async loadEvents(limit, offset){
+    async loadEvents(limit, offset) {
       var newEvents = await axios
         .get(`${c.serverURL}/event?limit=${limit}&offset=${offset}`)
-        .then((res) => res.data)
+        .then(res => res.data)
         .catch(err => console.error(err));
 
-      if(newEvents.length == limit)
-          this.hasMoreEvents = true;
-      else
-          this.hasMoreEvents = false;
+      if (newEvents.length == limit) this.hasMoreEvents = true;
+      else this.hasMoreEvents = false;
 
       this.loaded += limit;
       this.events = this.events.concat(newEvents);
     }
   },
   created() {
-     this.addEvents(this.limit);
-  },
+    this.addEvents(this.limit);
+  }
 };
 </script>
 
 <style scoped>
-.customButton{
-  width:1000px; 
-  margin-bottom: 30px
+.customButton {
+  width: 1000px;
+  margin-bottom: 30px;
 }
 </style>

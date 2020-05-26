@@ -1,6 +1,12 @@
 <template>
   <div>
     <Events v-bind:events="City_events" />
+    <button
+      v-if="hasMoreEvents"
+      @click="addEvents()"
+      type="button"
+      class="btn btn-secondary btn-lg customButton"
+    >Daugiau renginių</button>
   </div>
 </template>
 
@@ -16,28 +22,48 @@ export default {
   },
   data() {
     return {
-      City_events: []
+      City_events: [],
+      limit: 3,
+      hasMoreEvents: false,
+      loaded: 0
     };
   },
   methods: {
-    readCityInfo() {
-      axios
+    addEvents(limit = 6) {
+      this.loadEvents(limit, this.loaded);
+    },
+    async loadEvents(limit, offset) {
+      var newEvents = await axios
         .get(
-          `${c.serverURL}/event/search/category/${this.$route.params.event_type}`
+          `${c.serverURL}/event/search/category/${this.$route.params.event_type}?limit=${limit}&offset=${offset}`
         )
-        .then(res => (this.City_events = res.data))
+        .then(res => res.data)
         .catch(err => console.log(err));
+
+      if (newEvents.length == limit) this.hasMoreEvents = true;
+      else this.hasMoreEvents = false;
+
+      this.loaded += limit;
+      this.City_events = this.City_events.concat(newEvents);
     }
   },
+
   watch: {
     $route() {
-      this.readCityInfo();
+      this.City_events = [];
+      this.loaded = 0;
+      this.addEvents();
     }
   },
-  async created() {
-    await this.readCityInfo();
+  created() {
+    this.addEvents(this.limit);
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.customButton {
+  width: 1000px;
+  margin-bottom: 30px;
+}
+</style>

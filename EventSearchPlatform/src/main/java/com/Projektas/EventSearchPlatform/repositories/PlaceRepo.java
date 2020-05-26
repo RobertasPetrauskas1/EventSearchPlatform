@@ -12,14 +12,14 @@ public interface PlaceRepo extends CrudRepository<Place, Integer> {
     @Query(value = "SELECT * FROM place LIMIT ?1 OFFSET ?2", nativeQuery = true)
     List<Place> limitAndOffsetPlaces(Integer limit, Integer offset);
 
-    @Query(value = "SELECT * FROM place WHERE place.name LIKE CONCAT('%',:str,'%') OR place.description LIKE CONCAT('%',:str,'%') ", nativeQuery = true)
-    List<Place> searchPlaces(@Param("str") String str);
+    @Query(value = "SELECT * FROM place WHERE place.name LIKE CONCAT('%',:str,'%') OR place.description LIKE CONCAT('%',:str,'%') LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<Place> searchPlaces(@Param("limit")Integer limit, @Param("offset")Integer offset,@Param("str") String str);
 
-    @Query(value = "SELECT * FROM place WHERE place.fk_city = :city", nativeQuery = true)
-    List<Place> searchPlacesByCity(@Param("city") String city);
+    @Query(value = "SELECT * FROM place WHERE place.fk_city = :city LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<Place> searchPlacesByCity(@Param("limit")Integer limit, @Param("offset")Integer offset,@Param("city") String city);
 
-    @Query(value = "SELECT * FROM place WHERE place.fk_place_type = :category", nativeQuery = true)
-    List<Place> searchPlacesByCategory(@Param("category") String category);
+    @Query(value = "SELECT * FROM place WHERE place.fk_place_type = :category LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<Place> searchPlacesByCategory(@Param("limit")Integer limit, @Param("offset")Integer offset,@Param("category") String category);
 
     @Query(value = "SELECT * FROM place WHERE place.name = :name", nativeQuery = true)
     Optional<Place> findByName(String name);

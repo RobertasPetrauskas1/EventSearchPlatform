@@ -1,6 +1,12 @@
 <template>
   <div>
     <Places v-bind:places="input_Results" />
+    <button
+      v-if="hasMorePlaces"
+      @click="addPlaces()"
+      type="button"
+      class="btn btn-secondary btn-lg customButton"
+    >Daugiau vietų</button>
   </div>
 </template>
 
@@ -16,26 +22,47 @@ export default {
   },
   data() {
     return {
-      input_Results: []
+      input_Results: [],
+      limit: 3,
+      hasMorePlaces: false,
+      loaded: 0
     };
   },
   methods: {
-    readInputResults() {
-      axios
-        .get(`${c.serverURL}/place/search/${this.$route.params.input}`)
-        .then(res => (this.input_Results = res.data))
+    addPlaces(limit = 6) {
+      this.loadPlaces(limit, this.loaded);
+    },
+    async loadPlaces(limit, offset) {
+      var newPlaces = await axios
+        .get(
+          `${c.serverURL}/place/search/${this.$route.params.input}?limit=${limit}&offset=${offset}`
+        )
+        .then(res => res.data)
         .catch(err => console.log(err));
+
+      if (newPlaces.length == limit) this.hasMorePlaces = true;
+      else this.hasMorePlaces = false;
+
+      this.loaded += limit;
+      this.input_Results = this.input_Results.concat(newPlaces);
     }
   },
   watch: {
     $route() {
-      this.readInputResults();
+      this.input_Results = [];
+      this.loaded = 0;
+      this.addPlaces();
     }
   },
-  async created() {
-    await this.readInputResults();
+  created() {
+    this.addPlaces();
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.customButton {
+  width: 1000px;
+  margin-bottom: 30px;
+}
+</style>

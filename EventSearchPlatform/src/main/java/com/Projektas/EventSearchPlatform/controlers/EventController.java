@@ -85,32 +85,83 @@ public class EventController {
         }
     }
 
-    @GetMapping("/search/{str}")
-    public List<Object> searchEvents(@PathVariable("str") String str){
-        List<Event> fullList = eventRepo.searchEvents(str);
-        List<Object> previewList = new ArrayList<>();
-        for(Event e : fullList){
-            previewList.add(e.toPreview());
+    @GetMapping(value = "/search/{str}", params = {"limit", "offset"})
+    public List<Object> searchEvents(@PathVariable("str") String str, @RequestParam("limit") Integer limit,
+                                     @RequestParam("offset") Integer offset){
+        try {
+            if(limit > 0 && offset >= 0) {
+                List<Event> fullList = eventRepo.searchEvents(limit, offset, str);
+                List<Object> previewList = new ArrayList<>();
+                for (Event e : fullList) {
+                    previewList.add(e.toPreview());
+                }
+                return previewList;
+            }else{
+                Map<String, Object> err = new LinkedHashMap<>();
+                err.put("timestamp", LocalDateTime.now());
+                err.put("status", HttpStatus.BAD_REQUEST);
+                err.put("error", "Limit cant be less than 1. Offset cant be less than 0.");
+                List<Object> list = new ArrayList<>();
+                list.add(err);
+                return list;
+            }
+        }catch(MethodArgumentTypeMismatchException e){
+            List<Object> temp = new ArrayList<>();
+            temp.add(Messages.errorMsgMap("Wrong imput for limit and offset"));
+            return temp;
         }
-        return previewList;
     }
-    @GetMapping("/search/city/{city}")
-    public List<Object> searchEventsByCity(@PathVariable("city") String city){
-        List<Event> fullList = eventRepo.searchEventsByCity(city);
-        List<Object> previewList = new ArrayList<>();
-        for(Event e : fullList){
-            previewList.add(e.toPreview());
+    @GetMapping(value = "/search/city/{city}", params = {"limit", "offset"})
+    public List<Object> searchEventsByCity(@PathVariable("city") String city, @RequestParam("limit") Integer limit,
+                                           @RequestParam("offset") Integer offset){
+        try {
+            if (limit > 0 && offset >= 0) {
+                List<Event> fullList = eventRepo.searchEventsByCity(limit, offset, city);
+                List<Object> previewList = new ArrayList<>();
+                for (Event e : fullList) {
+                    previewList.add(e.toPreview());
+                }
+                return previewList;
+            }else{
+                Map<String, Object> err = new LinkedHashMap<>();
+                err.put("timestamp", LocalDateTime.now());
+                err.put("status", HttpStatus.BAD_REQUEST);
+                err.put("error", "Limit cant be less than 1. Offset cant be less than 0.");
+                List<Object> list = new ArrayList<>();
+                list.add(err);
+                return list;
+            }
+        }catch(MethodArgumentTypeMismatchException e){
+            List<Object> temp = new ArrayList<>();
+            temp.add(Messages.errorMsgMap("Wrong imput for limit and offset"));
+            return temp;
         }
-        return previewList;
     }
-    @GetMapping("/search/category/{category}")
-    public List<Object> searchEventsByCategory(@PathVariable("category") String category){
-        List<Event> fullList = eventRepo.searchEventsByCategory(category);
-        List<Object> previewList = new ArrayList<>();
-        for(Event e : fullList){
-            previewList.add(e.toPreview());
+    @GetMapping(value = "/search/category/{category}", params = {"limit", "offset"})
+    public List<Object> searchEventsByCategory(@PathVariable("category") String category,@RequestParam("limit") Integer limit,
+                                               @RequestParam("offset") Integer offset){
+        try {
+            if (limit > 0 && offset >= 0) {
+                List<Event> fullList = eventRepo.searchEventsByCategory(limit, offset, category);
+                List<Object> previewList = new ArrayList<>();
+                for (Event e : fullList) {
+                    previewList.add(e.toPreview());
+                }
+                return previewList;
+            }else{
+                Map<String, Object> err = new LinkedHashMap<>();
+                err.put("timestamp", LocalDateTime.now());
+                err.put("status", HttpStatus.BAD_REQUEST);
+                err.put("error", "Limit cant be less than 1. Offset cant be less than 0.");
+                List<Object> list = new ArrayList<>();
+                list.add(err);
+                return list;
+            }
+        }catch(MethodArgumentTypeMismatchException e){
+            List<Object> temp = new ArrayList<>();
+            temp.add(Messages.errorMsgMap("Wrong imput for limit and offset"));
+            return temp;
         }
-        return previewList;
     }
 
     @PostMapping(params = {"fk_user_id", "name", "fk_event_type", "date", "time", "duration", "fk_city",
@@ -154,6 +205,7 @@ public class EventController {
     @PostMapping
     public ResponseEntity<Object> addEvent(@RequestBody @Valid Event event){
         if(!eventRepo.findByName(event.getName()).isPresent()) {
+            event.setId(null);
             boolean isUser = userRepo.findById(event.getFk_user_id()).isPresent();
             boolean isEventType = eventTypeRepo.findById(event.getFk_event_type()).isPresent();
             boolean isEventTypeSingular = eventTypeRepo.findByIdSingular(event.getFk_event_type()).isPresent();

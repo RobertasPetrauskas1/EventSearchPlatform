@@ -1,6 +1,12 @@
 <template>
   <div>
     <Events v-bind:events="input_Results" />
+    <button
+      v-if="hasMoreEvents"
+      @click="addEvents()"
+      type="button"
+      class="btn btn-secondary btn-lg customButton"
+    >Daugiau renginių</button>
   </div>
 </template>
 
@@ -16,26 +22,46 @@ export default {
   },
   data() {
     return {
-      input_Results: []
+      input_Results: [],
+      limit: 3,
+      hasMoreEvents: false,
+      loaded: 0
     };
   },
   methods: {
-    readInputResults() {
-      axios
-        .get(`${c.serverURL}/event/search/${this.$route.params.input}`)
-        .then(res => (this.input_Results = res.data))
+    addEvents(limit = 6) {
+      this.loadEvents(limit, this.loaded);
+    },
+    async loadEvents(limit, offset) {
+      var newEvents = await axios
+        .get(
+          `${c.serverURL}/event/search/${this.$route.params.input}?limit=${limit}&offset=${offset}`
+        )
+        .then(res => res.data)
         .catch(err => console.log(err));
+      if (newEvents.length == limit) this.hasMoreEvents = true;
+      else this.hasMoreEvents = false;
+
+      this.loaded += limit;
+      this.input_Results = this.input_Results.concat(newEvents);
     }
   },
   watch: {
     $route() {
-      this.readInputResults();
+      this.input_Results = [];
+      this.loaded = 0;
+      this.addEvents();
     }
   },
-  async created() {
-    await this.readInputResults();
+  created() {
+    this.addEvents();
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.customButton {
+  width: 1000px;
+  margin-bottom: 30px;
+}
+</style>

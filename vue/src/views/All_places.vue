@@ -7,9 +7,7 @@
       type="button"
       class="btn btn-secondary btn-lg"
       style="btn; width:1000px; margin-bottom: 30px"
-    >
-      Daugiau vietų
-    </button>
+    >Daugiau vietų</button>
   </div>
 </template>
 
@@ -21,14 +19,14 @@ import c from "@/const";
 export default {
   name: "All_places",
   components: {
-    Places,
+    Places
   },
   data() {
     return {
       places: [],
       limit: 3,
       hasMorePlaces: false,
-      loaded: 0,
+      loaded: 0
     };
   },
   methods: {
@@ -38,19 +36,19 @@ export default {
     async loadPlaces(limit, offset) {
       var newPlaces = await axios
         .get(`${c.serverURL}/place?limit=${limit}&offset=${offset}`)
-        .then((res) => res.data)
-        .catch((err) => console.error(err));
+        .then(res => res.data)
+        .catch(err => console.error(err));
 
       if (newPlaces.length == limit) this.hasMorePlaces = true;
       else this.hasMorePlaces = false;
 
       this.loaded += limit;
       this.places = this.places.concat(newPlaces);
-    },
+    }
   },
   created() {
     this.addPlaces(this.limit);
-  },
+  }
 };
 </script>
 
