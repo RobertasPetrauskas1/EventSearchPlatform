@@ -90,8 +90,9 @@
 <script>
 import axios from "axios";
 import c from "@/const";
-import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css'
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+import { mapState } from 'vuex';
 
 let AllFields = {
   eventCat: {
@@ -245,11 +246,14 @@ export default {
         description: this.eventDes,
         tickets: null,
         fk_photo: null
+      }, {
+        'Authorization': 'Bearer ' + this.token
       })
         .then((res) => {this.places = res.data})
         .catch((err) => {console.log(err)});
     }
   },
+  computed:mapState(['token']),
   created() {
     this.readCategoryTypes();
     this.readPlaceTypes();
