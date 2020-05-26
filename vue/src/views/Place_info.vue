@@ -26,14 +26,12 @@
       <!--puslapio ikona ir info-->
 
       <img src="../assets/internet.png" alt="page_icon" class="image_ex" />
-      <span class="page">{{placeInfo.website}}</span>
+      <a :href="placeInfo.website" style="color: #2c3e50" ><span class="page"> {{placeInfo.website}}</span> </a>
       <p></p>
     </div>
     <!--social media-->
     <div class="social_m">
-      <img src="../assets/facebook.png" alt="facebook_icon" class="social" />
-      <img src="../assets/google-plus.png" alt="google_icon" class="social" />
-      <img src="../assets/twitter.png" alt="twitter_icon" class="social" />
+      <a :href="placeInfo.facebook" ><img src="../assets/facebook.png" alt="facebook_icon" class="social" /> </a>
     </div>
     <!--tekstas apie rengini-->
     <div class="main_text">

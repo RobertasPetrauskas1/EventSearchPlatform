@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       places: [],
-      limit: 3,
+      limit: 6,
       hasMorePlaces: false,
       loaded: 0
     };

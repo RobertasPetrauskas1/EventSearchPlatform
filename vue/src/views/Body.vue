@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       events: [],
-      limit: 3,
+      limit: 6,
       hasMoreEvents: false,
       loaded: 0
     };

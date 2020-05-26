@@ -45,9 +45,12 @@
           </div>
           <div class="steps" :class="getStepClass(2)">
             <div class="form-group">
-              <!-- Nuotrauka -->
-              <label for="exampleFormControlFile1">Pasirinkite renginio nuotrauka</label>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1" name="img" @change="selectedFile" multiple>
+              <label for="inp2">Renginio pavadinimas</label>
+              <input type="text" id="inp2" class="form-control" v-model="eventName" :class="{invalid: !isValid('eventName')}">
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Renginio aprašymas</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="eventDes" :class="{invalid: !isValid('eventDes')}"></textarea>
+                </div>
             </div>
           </div>
           <div class="steps" :class="getStepClass(3)">
@@ -55,7 +58,7 @@
               <div class="form-group">
                 <!-- Nuotrauka -->
                 <label for="exampleFormControlFile1">Pasirinkite renginio nuotrauka</label>
-                <input type="file" class="form-control-file" id="exampleFormControlFile1" />
+                <input type="file" class="form-control-file" id="exampleFormControlFile1" @change="selectedFile" multiple/>
               </div>
             </div>
           </div>
@@ -158,7 +161,7 @@ import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import { mapState } from "vuex";
 
-const phoneRegex = new RegExp("^\\+?[0-9 ]+$");
+const phoneRegex = new RegExp("^\\+?[0-9]{8,12}$");
 const webRegex = new RegExp(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g);
 let AllFields = {
   eventCat: {
@@ -222,7 +225,8 @@ export default {
       validatedPages: [],
       kategorijos: [],
       places: [],
-      photoID: 0
+      photoID: 0,
+      ticketLink: ""
     }
   },
   methods: {
@@ -320,7 +324,7 @@ export default {
         website: this.pageLink,
         facebook: this.webSite,
         description: this.eventDes,
-        tickets: null,
+        tickets: this.ticketLink,
         fk_photo: this.photoID
       }, {
         headers: {
@@ -350,8 +354,6 @@ export default {
         .catch((error) =>{
           console.log(error.response);
       });
-
-      console.log(this.photoID);
     }
   },
   computed: mapState(["token"]),

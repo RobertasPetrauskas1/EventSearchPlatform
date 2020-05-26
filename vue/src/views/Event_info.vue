@@ -38,9 +38,7 @@
         </div>
         <!--social media-->
         <div class="social_m">
-            <img src="../assets/facebook.png" alt="facebook_icon" class="social">
-            <img src="../assets/google-plus.png" alt="google_icon" class="social">
-            <img src="../assets/twitter.png" alt="twitter_icon" class="social">
+            <a :href="eventInfo.facebook"> <img src="../assets/facebook.png" alt="facebook_icon" class="social"> </a>
         </div>
         <!--tekstas apie rengini-->
         <div class="main_text">
