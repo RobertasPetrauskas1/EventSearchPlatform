@@ -31,12 +31,20 @@ public class PhotoController {
         try {
             Photo photo = photosRepo.findById(id).get();
 //            ClassPathResource imgFile = new ClassPathResource("user_upload/" + photo.getName());
+<<<<<<< HEAD
             File imgFile = new File("C:\\Users\\redak\\OneDrive\\Desktop\\Sem_projektas\\EventSearchPlatform\\src\\main\\resources" + photo.getName());
+=======
+            File imgFile = new File("C:\\Users\\aiste\\OneDrive\\Desktop\\projektas\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\" + photo.getName());
+>>>>>>> e183c222edaf64b38d46c9f95d05880db72dea12
             byte[] bytes = Files.readAllBytes(Paths.get(imgFile.getPath()));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
         }catch (NoSuchElementException e) {
 //            ClassPathResource imgFile = new ClassPathResource("user_upload/notFound.jpg");
+<<<<<<< HEAD
             File imgFile = new File("C:\\Users\\redak\\OneDrive\\Desktop\\Sem_projektas\\EventSearchPlatform\\src\\main\\resources");
+=======
+            File imgFile = new File("C:\\Users\\aiste\\OneDrive\\Desktop\\projektas\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\notFound.jpg");
+>>>>>>> e183c222edaf64b38d46c9f95d05880db72dea12
             byte[] bytes = Files.readAllBytes(Paths.get(imgFile.getPath()));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(bytes);
         }
@@ -52,7 +60,11 @@ public class PhotoController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> uploadEventImage(@RequestParam("img") MultipartFile img) throws IOException {
         int nextId = photosRepo.getNextId();
+<<<<<<< HEAD
         File convertFile = new File("C:\\Users\\redak\\OneDrive\\Desktop\\Sem_projektas\\EventSearchPlatform\\src\\main\\resources" + nextId + ".jpg");
+=======
+        File convertFile = new File("C:\\Users\\aiste\\OneDrive\\Desktop\\projektas\\EventSearchPlatform\\EventSearchPlatform\\src\\main\\resources\\user_upload\\event_photos\\" + nextId + ".jpg");
+>>>>>>> e183c222edaf64b38d46c9f95d05880db72dea12
         boolean created = convertFile.createNewFile();
         FileOutputStream fout = new FileOutputStream(convertFile);
         fout.write(img.getBytes());
